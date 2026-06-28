@@ -389,7 +389,7 @@ let CV={
   deneyim:[{yil:{tr:"2023—",en:"2023—"},tr:{b:"Fashion Design — Lisans",p:"Üniversite / Bölüm adını buraya yaz."},en:{b:"Fashion Design — BA",p:"Write your university / program here."}},{yil:{tr:"2024",en:"2024"},tr:{b:"Atölye / Staj",p:"Deneyim açıklamasını buraya yaz."},en:{b:"Atelier / Internship",p:"Write your experience here."}}],
   iletisim:[{etiket:"E-posta",deger:"mertvergili@gmail.com",link:"mailto:mertvergili@gmail.com"},{etiket:"Instagram",deger:"@vergilistudio",link:"https://www.instagram.com/vergilistudio"}],
   pdfLink:"", portfolioLink:"", bildirimEmail:"mertvergili@gmail.com", formEndpoint:"https://formspree.io/f/xkolbzev",
-  siteKok:"", analitik:{sistem:"",kod:""}, // siteKok: domain aktifleşince "https://mertvergili.com" yaz · analitik: goatcounter|plausible + kod
+  siteKok:"", analitik:{sistem:"goatcounter",kod:"mertvergili"}, // siteKok: domain aktifleşince "https://mertvergili.com" · analitik kod 'mertvergili' → https://mertvergili.goatcounter.com/count (panelden değiştirilebilir, boşsa yüklenmez)
 };
 const DIL={
   tr:{muze:"MÜZE",hakkimda:"HAKKIMDA",iletisim:"İLETİŞİM",galeriBaslik:"GALERİ",ipucu:"Tasarıma tıkla · sürükleyerek bak · ortadaki koltuğa otur",yetenekler:"YETENEKLER",deneyim:"DENEYİM & EĞİTİM",muzeyeDon:"MÜZEYE DÖN",linkKopya:"Linki kopyala",linkKopyalandi:"Link kopyalandı ✓",hikaye:"PROJE",teknik:"TEKNİK NOTLAR",gorsellerBaslik:"GÖRSELLER",pdf:"CV'Yİ İNDİR (PDF)",pdfYok:"CV YAKINDA",portfolyo:"PORTFOLYOYU İNDİR (PDF)",portfolyoYok:"PORTFOLYO YAKINDA",kumasLabel:"Kumaş",detayAc:"Detayları gör",cik:"‹ ÇIKIŞ",ilBaslik:"İletişim",formBaslik:"MESAJ GÖNDER",adPlace:"Adınız (opsiyonel)",epostaPlace:"E-posta (yanıt için)",mesajPlace:"Mesajınız",gonder:"GÖNDER",gonderMail:"E-POSTA İLE GÖNDER",gonderiliyor:"GÖNDERİLİYOR…",formOk:"Teşekkürler — mesajın bana ulaştı. En kısa sürede dönerim.",formMail:"E-posta uygulaman açılıyor…",formHata:"Lütfen mesaj alanını doldur.",formHataNet:"Gönderilemedi. Lütfen tekrar dene ya da doğrudan e-posta yaz.",formNotEndpoint:"Mesajın doğrudan bana iletilir.",formNotMail:"Statik site: Gönder'e basınca e-posta uygulaman açılır.",epostaGecersiz:"Geçerli bir e-posta gir ya da boş bırak."},
@@ -767,6 +767,10 @@ function izleTasarim(slug){try{if(!analitikAktif()||!slug)return;const a=CV.anal
   if(a.sistem==='plausible'&&window.plausible)window.plausible('Tasarım',{props:{tasarim:slug}});
   else if(a.sistem==='goatcounter'&&window.goatcounter&&window.goatcounter.count)window.goatcounter.count({path:'/d/'+slug,title:'Tasarım: '+slug,event:false});
 }catch(e){}}
+function analitikHazir(){try{if(!analitikAktif())return false;const a=CV.analitik;
+  return (a.sistem==='goatcounter'&&window.goatcounter&&window.goatcounter.count)||(a.sistem==='plausible'&&!!window.plausible);}catch(e){return false;}}
+function izleGecikmeli(fn,kalan){try{if(!analitikAktif())return;kalan=(kalan==null)?10:kalan; // script async yüklenene kadar kısa süre dene
+  if(analitikHazir())fn();else if(kalan>0)setTimeout(()=>izleGecikmeli(fn,kalan-1),400);}catch(e){}}
 /* ===== LIGHTBOX ===== */
 let lbList=[],lbIndex=0;
 function lightboxAc(list,idx){lbList=list||[];lbIndex=idx||0;if(!lbList.length)return;lbGoster();document.getElementById('lightbox').classList.add('acik');}
@@ -1114,6 +1118,7 @@ init();
   girisYap(); // introyu atla
   const ac=()=>{ if(!eserMeshler.length){return setTimeout(ac,120);} introModu=false;eseraGit(idx);setTimeout(()=>acSheet(),700); };
   setTimeout(ac,400);
+  izleGecikmeli(()=>izle('Paylaşılan link girişi','/event/design-link')); // analytics hazır olunca güvenle logla
 }catch(e){}})();
 </script>
 </body>
