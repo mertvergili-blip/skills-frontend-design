@@ -18,17 +18,20 @@
 <meta name="author" content="Mert Vergili" />
 <meta name="theme-color" content="#070709" />
 <meta name="robots" content="index, follow" />
-<!-- Paylaşım önizlemesi (Instagram/WhatsApp/LinkedIn). og-cover.jpg adında 1200x630 bir kapak görseli ekleyip aynı klasöre koy. -->
+<!-- Paylaşım önizlemesi (Instagram/WhatsApp/LinkedIn). og-cover.jpg adında 1200x630 bir kapak görseli ekleyip aynı klasöre koy.
+     Domain: og:url/canonical, panel "Site adresi" (siteKok) ile https://mertvergili.com'a geçer; boşken otomatik mevcut adresi kullanır. -->
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Mert Vergili — Fashion Designer · Istanbul" />
 <meta property="og:description" content="Sinematik 3B portfolyo müzesi. Tasarımları gez, koltuğa otur, detayları keşfet." />
 <meta property="og:image" content="og-cover.jpg" />
+<meta property="og:url" content="./" />
 <meta property="og:locale" content="tr_TR" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Mert Vergili — Fashion Designer · Istanbul" />
 <meta name="twitter:description" content="Sinematik 3B portfolyo müzesi." />
 <meta name="twitter:image" content="og-cover.jpg" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20fill='%23070709'/%3E%3Ctext%20x='32'%20y='44'%20font-family='Georgia,serif'%20font-size='32'%20fill='%23c0263a'%20text-anchor='middle'%3EMV%3C/text%3E%3C/svg%3E" />
+<link rel="manifest" href="site.webmanifest" />
 <link rel="canonical" href="./" />
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Mert Vergili","jobTitle":"Fashion Designer","address":{"@type":"PostalAddress","addressLocality":"Istanbul","addressCountry":"TR"}}
@@ -112,7 +115,8 @@
   .d-akis{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:54px 40px 0;align-items:start}
   .d-akis .d-figur{margin:0;overflow:hidden;border-radius:4px;background:var(--ink-2)}
   .d-akis .d-figur.genis{grid-column:1/-1}
-  .d-akis .d-figur img{width:100%;height:auto;display:block;cursor:zoom-in;background:var(--ink-2);border:1px solid var(--line);border-radius:4px}
+  .d-akis .d-figur img{width:100%;height:auto;display:block;cursor:zoom-in;background:var(--ink-2);border:1px solid var(--line);border-radius:4px;opacity:0;transition:opacity .6s ease}
+  .d-akis .d-figur img.yuklendi{opacity:1}
   .d-akis .d-figur figcaption{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--bone-dim);margin-top:10px;line-height:1.5}
   .d-akis .d-akis-baslik{grid-column:1/-1;font-family:'Fraunces',serif;font-weight:300;font-size:clamp(22px,3vw,32px);color:var(--bone);margin:30px 0 -16px;padding-top:18px;border-top:1px solid var(--line)}
   .d-akis-bos{grid-column:1/-1;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1px;color:var(--bone-dim);text-align:center;padding:30px;border:1px dashed var(--line);border-radius:8px}
@@ -342,6 +346,20 @@
       </div>
     </div>
 
+    <div class="sf-bolum"><h3>SİTE & ANALYTICS</h3>
+      <p class="dz-not" style="margin-top:0">Domain aktifleşince <b>Site adresi</b> alanına <b>https://mertvergili.com</b> yaz — canonical, paylaşım linkleri ve OG otomatik domaine geçer. Boşken mevcut adres kullanılır (bozulmaz).</p>
+      <input class="dz-input" id="dz-sitekok" style="margin-top:10px" placeholder="Site adresi (örn. https://mertvergili.com) — boş bırakılabilir">
+      <p class="dz-not">Analytics — hafif & çerezsiz. Boş bırakırsan hiçbir script yüklenmez (site hızlı kalır).</p>
+      <div class="dz-grid">
+        <select class="dz-input" id="dz-analitik-sistem">
+          <option value="">Analytics: Kapalı</option>
+          <option value="goatcounter">GoatCounter (ücretsiz, önerilen)</option>
+          <option value="plausible">Plausible (ücretli)</option>
+        </select>
+        <input class="dz-input" id="dz-analitik-kod" placeholder="GoatCounter kodu (örn. mertvergili) / Plausible domaini">
+      </div>
+    </div>
+
     <button id="dz-indir">DEĞİŞİKLİKLERİ İNDİR (Yeni Site Dosyası)</button>
     <p class="dz-not">Not: bu indirme tarayıcıda çalışır. Eğer şu an Claude önizlemesindeyken indirme butonu bir şey yapmazsa, dosyayı bir kez Netlify/GitHub'a yükledikten sonra <b>kendi yayındaki sitende</b> dene — orada kesin çalışır. Değişikliklerin zaten bu cihazda kayıtlı, kaybolmaz.</p>
     <div class="dz-alt-aksiyon">
@@ -371,6 +389,7 @@ let CV={
   deneyim:[{yil:{tr:"2023—",en:"2023—"},tr:{b:"Fashion Design — Lisans",p:"Üniversite / Bölüm adını buraya yaz."},en:{b:"Fashion Design — BA",p:"Write your university / program here."}},{yil:{tr:"2024",en:"2024"},tr:{b:"Atölye / Staj",p:"Deneyim açıklamasını buraya yaz."},en:{b:"Atelier / Internship",p:"Write your experience here."}}],
   iletisim:[{etiket:"E-posta",deger:"mertvergili@gmail.com",link:"mailto:mertvergili@gmail.com"},{etiket:"Instagram",deger:"@vergilistudio",link:"https://www.instagram.com/vergilistudio"}],
   pdfLink:"", portfolioLink:"", bildirimEmail:"mertvergili@gmail.com", formEndpoint:"https://formspree.io/f/xkolbzev",
+  siteKok:"", analitik:{sistem:"",kod:""}, // siteKok: domain aktifleşince "https://mertvergili.com" yaz · analitik: goatcounter|plausible + kod
 };
 const DIL={
   tr:{muze:"MÜZE",hakkimda:"HAKKIMDA",iletisim:"İLETİŞİM",galeriBaslik:"GALERİ",ipucu:"Tasarıma tıkla · sürükleyerek bak · ortadaki koltuğa otur",yetenekler:"YETENEKLER",deneyim:"DENEYİM & EĞİTİM",muzeyeDon:"MÜZEYE DÖN",linkKopya:"Linki kopyala",linkKopyalandi:"Link kopyalandı ✓",hikaye:"PROJE",teknik:"TEKNİK NOTLAR",gorsellerBaslik:"GÖRSELLER",pdf:"CV'Yİ İNDİR (PDF)",pdfYok:"CV YAKINDA",portfolyo:"PORTFOLYOYU İNDİR (PDF)",portfolyoYok:"PORTFOLYO YAKINDA",kumasLabel:"Kumaş",detayAc:"Detayları gör",cik:"‹ ÇIKIŞ",ilBaslik:"İletişim",formBaslik:"MESAJ GÖNDER",adPlace:"Adınız (opsiyonel)",epostaPlace:"E-posta (yanıt için)",mesajPlace:"Mesajınız",gonder:"GÖNDER",gonderMail:"E-POSTA İLE GÖNDER",gonderiliyor:"GÖNDERİLİYOR…",formOk:"Teşekkürler — mesajın bana ulaştı. En kısa sürede dönerim.",formMail:"E-posta uygulaman açılıyor…",formHata:"Lütfen mesaj alanını doldur.",formHataNet:"Gönderilemedi. Lütfen tekrar dene ya da doğrudan e-posta yaz.",formNotEndpoint:"Mesajın doğrudan bana iletilir.",formNotMail:"Statik site: Gönder'e basınca e-posta uygulaman açılır.",epostaGecersiz:"Geçerli bir e-posta gir ya da boş bırak."},
@@ -417,6 +436,8 @@ function otomatikKaydet(){
 }
 function migrasyon(){ // eski kayıtları yeni modele uyarla (geriye dönük uyumluluk)
   if(typeof CV.portfolioLink!=='string')CV.portfolioLink='';
+  if(typeof CV.siteKok!=='string')CV.siteKok='';
+  if(typeof CV.analitik!=='object'||!CV.analitik)CV.analitik={sistem:'',kod:''};else{CV.analitik.sistem=CV.analitik.sistem||'';CV.analitik.kod=CV.analitik.kod||'';}
   if(Array.isArray(CV.deneyim))CV.deneyim.forEach(d=>{if(typeof d.yil!=='object'||d.yil===null){const s=d.yil||'';d.yil={tr:s,en:s};}else{d.yil.tr=d.yil.tr||'';d.yil.en=d.yil.en||'';}});
   if(Array.isArray(TASARIMLAR))TASARIMLAR.forEach((t,i)=>{
     if(!Array.isArray(t.gorseller))t.gorseller=[];
@@ -434,7 +455,9 @@ function migrasyon(){ // eski kayıtları yeni modele uyarla (geriye dönük uyu
   });
 }
 function slugYap(s){return String(s||'').toLowerCase().replace(/ı/g,'i').replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ş/g,'s').replace(/ö/g,'o').replace(/ç/g,'c').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||('design');}
-function tasarimUrl(i){const s=TASARIMLAR[i].slug||('design-'+(i+1));return location.origin+location.pathname+'?design='+encodeURIComponent(s);}
+function siteKoku(){return (CV.siteKok&&CV.siteKok.trim())?CV.siteKok.trim().replace(/\/$/,''):location.origin;} // domain aktifse onu, değilse mevcut adresi kullan
+function siteTabani(){return (CV.siteKok&&CV.siteKok.trim())?(siteKoku()+'/'):(location.origin+location.pathname.replace(/index\.html$/,''));} // domain ayarlıysa kök; değilse mevcut alt-yol (github.io)
+function tasarimUrl(i){const s=TASARIMLAR[i].slug||('design-'+(i+1));return siteTabani()+'?design='+encodeURIComponent(s);}
 function kapakUrl(d,i){return (d.kapak&&d.kapak.trim())?d.kapak.trim():((d.gorseller&&d.gorseller[0])||yerTutucu(i));}
 function akisFotolari(d){return (d.galeri||[]).filter(g=>g.tip==='foto'&&g.src&&g.src.trim()).map(g=>g.src.trim());}
 veriYukle(); migrasyon(); // varsa kayıtlı içeriği baştan uygula + modele uyarla
@@ -671,7 +694,7 @@ function galeriListesi(){
 function galeriAc(){galeriListesi();document.getElementById('galeri').classList.add('acik');}
 function galeriKapat(){document.getElementById('galeri').classList.remove('acik');}
 
-function acSheet(){if(mod!=='eser')return;sheetAcik=true;document.getElementById('detay').classList.add('acik');document.getElementById('detay').scrollTop=0;tusGuncelle();}
+function acSheet(){if(mod!=='eser')return;sheetAcik=true;document.getElementById('detay').classList.add('acik');document.getElementById('detay').scrollTop=0;tusGuncelle();if(aktifEser>=0&&TASARIMLAR[aktifEser])izleTasarim(TASARIMLAR[aktifEser].slug);}
 function kapatSheet(){sheetAcik=false;document.getElementById('detay').classList.remove('acik');lbKapat();
   try{history.replaceState(null,'',location.origin+location.pathname);}catch(e){}
   document.title=CV.ad[dil]+' — '+KISI.rol[dil];tusGuncelle();}
@@ -707,17 +730,43 @@ function akisDoldur(i){const d=TASARIMLAR[i];const wrap=document.getElementById(
     if(g.tip==='baslik'){const m=(g.metin&&g.metin[dil])||'';return m.trim()?`<h3 class="d-akis-baslik">${esc(m)}</h3>`:'';}
     if(!g.src||!g.src.trim())return '';
     const idx=fi++;const cap=(g.cap&&g.cap[dil])||'';
-    return `<figure class="d-figur ${g.genis?'genis':''}"><img loading="lazy" src="${esc(g.src.trim())}" data-lb="${idx}" alt="${esc(cap||d.baslik[dil])}">${cap.trim()?`<figcaption>${esc(cap)}</figcaption>`:''}</figure>`;
+    return `<figure class="d-figur ${g.genis?'genis':''}"><img loading="lazy" decoding="async" src="${esc(g.src.trim())}" data-lb="${idx}" alt="${esc(cap||d.baslik[dil])}">${cap.trim()?`<figcaption>${esc(cap)}</figcaption>`:''}</figure>`;
   }).join('');
   wrap.querySelectorAll('img[data-lb]').forEach(im=>{
+    const belir=()=>im.classList.add('yuklendi');                 // yumuşak fade-in (lazy yüklenince)
+    if(im.complete&&im.naturalWidth)belir();else im.addEventListener('load',belir);
     im.addEventListener('click',()=>{if(!im.classList.contains('yok'))lightboxAc(foto,+im.dataset.lb);});
-    im.addEventListener('error',()=>{im.src=bulunamadiURL();im.classList.add('yok');im.style.cursor='default';});});
+    im.addEventListener('error',()=>{im.src=bulunamadiURL();im.classList.add('yok','yuklendi');im.style.cursor='default';});});
 }
+function ogSet(p,v,attr){let el=document.querySelector(`meta[${attr}="${p}"]`);if(el)el.setAttribute('content',v);}
+function kanonikKur(){ // canonical + og:url'i site köküne (domain varsa domaine) sabitle
+  const u=siteTabani();const c=document.querySelector('link[rel="canonical"]');if(c)c.setAttribute('href',u);ogSet('og:url',u,'property');}
 function ogGuncelle(d,i){const t=d.baslik[dil]+' — '+KISI.rol[dil];document.title=t;
-  const set=(p,v,attr)=>{let el=document.querySelector(`meta[${attr}="${p}"]`);if(el)el.setAttribute('content',v);};
-  set('og:title',t,'property');set('twitter:title',t,'name');
-  set('og:description',d.konsept[dil]||'','property');set('twitter:description',d.konsept[dil]||'','name');
-  const k=kapakUrl(d,i);if(k&&!k.startsWith('data:')){const abs=k.startsWith('http')?k:(location.origin+location.pathname.replace(/index\.html$/,'')+k.replace(/^\.?\//,''));set('og:image',abs,'property');set('twitter:image',abs,'name');}}
+  ogSet('og:title',t,'property');ogSet('twitter:title',t,'name');
+  ogSet('og:description',d.konsept[dil]||'','property');ogSet('twitter:description',d.konsept[dil]||'','name');
+  ogSet('og:url',tasarimUrl(i),'property');
+  const k=kapakUrl(d,i);if(k&&!k.startsWith('data:')){const abs=k.startsWith('http')?k:(siteTabani()+k.replace(/^\.?\//,''));ogSet('og:image',abs,'property');ogSet('twitter:image',abs,'name');}}
+/* ===== HAFİF & GİZLİLİK DOSTU ANALYTICS (yapılandırılmazsa hiç yüklenmez = sıfır maliyet) ===== */
+let _analitikYuklendi=false;
+function analitikAktif(){const a=CV.analitik||{};return a.sistem&&(a.kod||'').trim();}
+function analitikYukle(){
+  if(_analitikYuklendi||!analitikAktif())return;_analitikYuklendi=true;const a=CV.analitik,kod=a.kod.trim();
+  if(a.sistem==='plausible'){
+    window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)};
+    const s=document.createElement('script');s.defer=true;s.setAttribute('data-domain',kod);s.src='https://plausible.io/js/script.js';document.head.appendChild(s);
+  }else if(a.sistem==='goatcounter'){
+    const url=kod.startsWith('http')?kod:('https://'+kod+'.goatcounter.com/count');
+    const s=document.createElement('script');s.async=true;s.setAttribute('data-goatcounter',url);s.src='https://gc.zgo.at/count.js';document.head.appendChild(s);
+  }
+}
+function izle(ad,yol){try{if(!analitikAktif())return;const a=CV.analitik;
+  if(a.sistem==='plausible'&&window.plausible)window.plausible(ad);
+  else if(a.sistem==='goatcounter'&&window.goatcounter&&window.goatcounter.count)window.goatcounter.count({path:yol||('/event/'+ad),title:ad,event:true});
+}catch(e){}}
+function izleTasarim(slug){try{if(!analitikAktif()||!slug)return;const a=CV.analitik;
+  if(a.sistem==='plausible'&&window.plausible)window.plausible('Tasarım',{props:{tasarim:slug}});
+  else if(a.sistem==='goatcounter'&&window.goatcounter&&window.goatcounter.count)window.goatcounter.count({path:'/d/'+slug,title:'Tasarım: '+slug,event:false});
+}catch(e){}}
 /* ===== LIGHTBOX ===== */
 let lbList=[],lbIndex=0;
 function lightboxAc(list,idx){lbList=list||[];lbIndex=idx||0;if(!lbList.length)return;lbGoster();document.getElementById('lightbox').classList.add('acik');}
@@ -763,7 +812,7 @@ async function formGonder(){if(formGonderiliyor)return;
     try{
       const fd=new FormData();fd.append('message',ms);if(ad)fd.append('name',ad);if(ep){fd.append('email',ep);fd.append('_replyto',ep);}
       const r=await fetch(CV.formEndpoint.trim(),{method:'POST',headers:{'Accept':'application/json'},body:fd}); // Formspree AJAX (FormData → CORS uyumlu)
-      if(r.ok){durum.textContent=DIL[dil].formOk;durum.classList.add('ok');
+      if(r.ok){durum.textContent=DIL[dil].formOk;durum.classList.add('ok');izle('İletişim formu','/event/iletisim');
         document.getElementById('f-ad').value='';document.getElementById('f-eposta').value='';document.getElementById('f-mesaj').value='';}
       else{let msg=DIL[dil].formHataNet;try{const j=await r.json();if(j&&j.errors&&j.errors.length)msg=j.errors.map(x=>x.message).join(' ');}catch(e){}
         durum.textContent=msg;durum.classList.add('hata');}
@@ -804,8 +853,8 @@ document.getElementById('lb-onceki').addEventListener('click',()=>lbKaydir(-1));
 document.getElementById('lb-sonraki').addEventListener('click',()=>lbKaydir(1));
 document.getElementById('lightbox').addEventListener('click',e=>{if(e.target.id==='lightbox')lbKapat();});
 document.getElementById('form-gonder').addEventListener('click',formGonder);
-document.getElementById('hk-pdf').addEventListener('click',()=>{if(CV.pdfLink&&CV.pdfLink.trim())window.open(CV.pdfLink,'_blank','noopener');});
-document.getElementById('hk-portfolio').addEventListener('click',()=>{if(CV.portfolioLink&&CV.portfolioLink.trim())window.open(CV.portfolioLink,'_blank','noopener');});
+document.getElementById('hk-pdf').addEventListener('click',()=>{if(CV.pdfLink&&CV.pdfLink.trim()){izle('CV indir','/event/cv');window.open(CV.pdfLink,'_blank','noopener');}});
+document.getElementById('hk-portfolio').addEventListener('click',()=>{if(CV.portfolioLink&&CV.portfolioLink.trim()){izle('Portfolyo indir','/event/portfolyo');window.open(CV.portfolioLink,'_blank','noopener');}});
 
 /* ===================== DÜZENLEME PANELİ ===================== */
 function resimSikistir(file,maxW,kalite){
@@ -968,6 +1017,9 @@ function duzenlemePaneliDoldur(){
   document.getElementById('dz-skills').value=CV.skills.join(', ');
   document.getElementById('dz-bildirim-email').value=CV.bildirimEmail||'';
   document.getElementById('dz-form-endpoint').value=CV.formEndpoint||'';
+  document.getElementById('dz-sitekok').value=CV.siteKok||'';
+  document.getElementById('dz-analitik-sistem').value=(CV.analitik&&CV.analitik.sistem)||'';
+  document.getElementById('dz-analitik-kod').value=(CV.analitik&&CV.analitik.kod)||'';
   document.getElementById('dz-cv-url').value=(CV.pdfLink&&!CV.pdfLink.startsWith('data:'))?CV.pdfLink:'';
   document.getElementById('dz-cv-pdf-ad').textContent=CV.pdfLink?(CV.pdfLink.startsWith('data:')?'PDF dosyası yüklü ✓':'Link kayıtlı ✓'):'';
   document.getElementById('dz-portfolio-url').value=(CV.portfolioLink&&!CV.portfolioLink.startsWith('data:'))?CV.portfolioLink:'';
@@ -982,6 +1034,9 @@ document.getElementById('dz-bio-en').addEventListener('input',e=>{CV.bio.en=e.ta
 document.getElementById('dz-skills').addEventListener('input',e=>{CV.skills=e.target.value.split(',').map(s=>s.trim()).filter(Boolean);cvDoldur();});
 document.getElementById('dz-bildirim-email').addEventListener('input',e=>CV.bildirimEmail=e.target.value);
 document.getElementById('dz-form-endpoint').addEventListener('input',e=>{CV.formEndpoint=e.target.value.trim();formNotGuncelle();});
+document.getElementById('dz-sitekok').addEventListener('input',e=>{CV.siteKok=e.target.value.trim();kanonikKur();otomatikKaydet();});
+document.getElementById('dz-analitik-sistem').addEventListener('change',e=>{CV.analitik.sistem=e.target.value;_analitikYuklendi=false;analitikYukle();otomatikKaydet();});
+document.getElementById('dz-analitik-kod').addEventListener('input',e=>{CV.analitik.kod=e.target.value.trim();_analitikYuklendi=false;analitikYukle();otomatikKaydet();});
 document.getElementById('dz-deneyim-ekle').addEventListener('click',()=>{CV.deneyim.push({yil:{tr:'',en:''},tr:{b:'',p:''},en:{b:'',p:''}});dz_deneyimDoldur();cvDoldur();otomatikKaydet();});
 document.getElementById('dz-iletisim-ekle').addEventListener('click',()=>{CV.iletisim.push({etiket:'',deger:'',link:''});dz_iletisimDoldur();cvDoldur();otomatikKaydet();});
 document.getElementById('dz-cv-url').addEventListener('input',e=>{CV.pdfLink=e.target.value.trim();document.getElementById('dz-cv-pdf-ad').textContent=CV.pdfLink?'Link kayıtlı ✓':'';cvButonGuncelle();otomatikKaydet();});
@@ -1041,6 +1096,8 @@ function dz_indir(){
 document.getElementById('dz-indir').addEventListener('click',dz_indir);
 
 dilUygula();
+kanonikKur();      // canonical + og:url'i site köküne sabitle (domain varsa domaine)
+analitikYukle();   // analytics yapılandırıldıysa yükle (boşsa hiçbir şey yüklenmez)
 /* Düzenleme erişimi: anahtarla bir kez aç → o cihazda kalıcı kalır (sadece sen) */
 (function(){try{
   const p=new URLSearchParams(location.search);
