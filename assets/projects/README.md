@@ -1,54 +1,70 @@
-# Tasarım görselleri — buraya nasıl ekleyeceğin
+# Tasarım görselleri — 3 adımda ekleme
 
-Bu klasör, müzedeki her tasarımın fotoğraflarını tutar. Fotoğraflar artık tarayıcıya
-(base64 olarak) değil, **repo içinde dosya** olarak durur. Böylece tek tasarıma 10–20 görsel
-koysan bile site hızlı ve hafif kalır.
+Fotoğraflar artık tarayıcıya değil, **repo içinde dosya** olarak durur. Böylece tek tasarıma
+10–20 görsel koysan bile site hızlı kalır. Senin tek işin: **dosyaları doğru isimle doğru klasöre yüklemek.**
 
-## 1) Klasör ve isimlendirme
+## Adım 1 — Klasörü hazırla
 
-Her tasarım için kendi slug'ı (paylaşım linki adı) ile bir klasör aç:
-
-```
-assets/projects/<slug>/cover.webp      ← kapak (3B duvarda + hero'da görünen)
-assets/projects/<slug>/01.webp
-assets/projects/<slug>/02.webp
-assets/projects/<slug>/03.webp
-...
-```
-
-Örnek (slug = `kalip-no1`):
+Her tasarımın bir **slug**'ı var (paylaşım linki adı, örn. `kalip-no1`). O slug ile bir klasör aç:
 
 ```
-assets/projects/kalip-no1/cover.webp
+assets/projects/kalip-no1/
+```
+
+İçine fotoğrafları **şu sabit isimlerle** koy:
+
+```
+assets/projects/kalip-no1/cover.webp     ← KAPAK (3B duvarda + detay hero'da görünen)
 assets/projects/kalip-no1/01.webp
 assets/projects/kalip-no1/02.webp
+assets/projects/kalip-no1/03.webp
+...
+assets/projects/kalip-no1/10.webp
 ```
 
-- Format: **.webp** önerilir (en küçük boyut). `.jpg` / `.png` de olur.
-- İsimler basit ve sıralı olsun: `01`, `02`, `03`… (boşluk/türkçe karakter kullanma).
-- Önerilen genişlik: uzun kenar **~1600–2000px**, dosya başına **< 500 KB**.
-  (webp'e çevirmek için: https://squoosh.app — sürükle, bırak, indir.)
+- Format **.webp** önerilir (en küçük boyut). `.jpg` / `.png` de olur — panelde aynı formatı seç.
+- İsimler tam böyle olmalı: `cover`, `01`, `02`… (iki haneli, boşluk/Türkçe karakter yok).
+- Önerilen: uzun kenar ~1600–2000px, dosya başına < 500 KB. (webp'e çevir: https://squoosh.app)
+- Dikey/yatay fark etmez — site kırpmadan, oranını koruyarak gösterir.
 
-## 2) Edit panelinde path'i yazma
+## Adım 2 — Panelde otomatik yol oluştur
 
 Siteyi `?duzenle=mert2026` ile aç → ✎ → ilgili tasarımda:
 
-- **Paylaşım linki adı (slug):** `kalip-no1`
-- **Kapak görseli:** `assets/projects/kalip-no1/cover.webp`
-- **Galeri → + Görsel** ile her satıra path yaz:
-  - `assets/projects/kalip-no1/01.webp`
-  - `assets/projects/kalip-no1/02.webp`
-  - …
-- İstersen **+ Bölüm Başlığı** ile araya "Look photos / Detail shots / Process" gibi ara başlık ekle.
-- Her görselde **açıklama (TR/EN)** ve **Tam genişlik** seçeneği var (kapalıyken 2 kolon grid).
+1. **Paylaşım linki adı (slug):** `kalip-no1`
+2. **⚡ HIZLI KURULUM** kutusunda: **adet** (örn. 10) + **format** (webp) seç → **"Yolları oluştur"**.
 
-Tam URL de yazabilirsin: `https://...` (Drive/Behance/CDN). Karışık kullanabilirsin.
+Sistem şunları otomatik yazar (tek tek uğraşmazsın):
+`cover.webp` (kapak) + `01.webp … 10.webp` (galeri).
 
-## 3) Yayına alma
+> İstersen yine elle **+ Görsel** ile tek tek path ekleyebilir, **+ Bölüm Başlığı** ile araya
+> "Look photos / Detail shots / Process" gibi başlık koyabilir, her görsele TR/EN açıklama ve
+> "Tam genişlik" seçeneği verebilirsin.
 
-Görselleri bu klasöre koyup GitHub'a yükledikten sonra path'leri panele yaz ve
-panelin altından **İNDİR** ile yeni `index.html`'i alıp repoya koy (ya da panel değişikliklerini
-commit et). GitHub Pages 1–2 dakikada günceller.
+## Adım 3 — Yükle & yayınla
 
-> Not: Edit paneli artık fotoğrafı tarayıcıya gömmez; yalnızca **path/URL + sıralama + metinler**
-> kaydedilir. Bu yüzden görsel dosyalarının repoda bulunması gerekir.
+Dosyaları `assets/projects/<slug>/` klasörüne (GitHub'a sürükle-bırak ile) yükle ve commit et.
+GitHub Pages 1–2 dakikada günceller. Path doğruysa görseller otomatik görünür.
+
+- Bir dosya eksikse/yanlışsa site **kırık görsel göstermez**, şık bir "Görsel bulunamadı"
+  placeholder'ı gösterir; panelde de o görselin önizlemesi uyarı verir.
+- Tam URL de yazabilirsin (`https://...` Drive/Behance/CDN). Karışık kullanılabilir.
+
+## Örnek: 10 fotoğraflı bir tasarım
+
+```
+assets/projects/kalip-no1/
+├── cover.webp     (kapak)
+├── 01.webp
+├── 02.webp
+├── 03.webp
+├── 04.webp
+├── 05.webp
+├── 06.webp
+├── 07.webp
+├── 08.webp
+├── 09.webp
+└── 10.webp
+```
+
+Panelde: slug = `kalip-no1`, adet = `10`, format = `webp` → "Yolları oluştur". Bitti.

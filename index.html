@@ -175,6 +175,7 @@
   .dz-gitem2 .ust button:hover{border-color:var(--crimson);color:var(--bone)}
   .dz-gitem2 .ust .sil:hover{border-color:var(--crimson);color:var(--crimson)}
   .dz-mini-thumb{width:40px;height:52px;object-fit:cover;border-radius:3px;border:1px solid var(--line);background:var(--ink-2)}
+  .dz-oto{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px;padding:14px;border:1px solid var(--line);border-radius:8px;background:rgba(192,38,58,.05)}
   .dz-onay{display:flex;align-items:center;gap:7px;font-family:'Space Mono',monospace;font-size:11px;color:var(--bone-dim);margin-top:8px;cursor:pointer}
   .dz-onay input{accent-color:var(--crimson);width:15px;height:15px}
   .dz-foto{display:flex;gap:14px;align-items:center;margin-top:12px}
@@ -368,14 +369,14 @@ let CV={
   bio:{tr:"İstanbul merkezli bir fashion design öğrencisiyim. Patternmaking ve drape tekniklerinin yapısal disiplinini, görsel sanat yönetiminin sezgisiyle birleştiriyorum.",en:"I'm an Istanbul-based fashion design student. I combine the structural discipline of patternmaking and draping with the intuition of visual art direction."},
   skills:["Patternmaking","Draping","Tasarım Eskizi","Tekstil Bilgisi","Adobe Illustrator","Photoshop","CLO 3D","Görsel Yönetim"],
   deneyim:[{yil:{tr:"2023—",en:"2023—"},tr:{b:"Fashion Design — Lisans",p:"Üniversite / Bölüm adını buraya yaz."},en:{b:"Fashion Design — BA",p:"Write your university / program here."}},{yil:{tr:"2024",en:"2024"},tr:{b:"Atölye / Staj",p:"Deneyim açıklamasını buraya yaz."},en:{b:"Atelier / Internship",p:"Write your experience here."}}],
-  iletisim:[{etiket:"E-posta",deger:"mert@ornek.com",link:"mailto:mert@ornek.com"},{etiket:"Instagram",deger:"@mertvergili",link:"https://instagram.com/"},{etiket:"Behance",deger:"behance.net/mertvergili",link:"https://behance.net/"}],
-  pdfLink:"", portfolioLink:"", bildirimEmail:"mert@ornek.com", formEndpoint:"",
+  iletisim:[{etiket:"E-posta",deger:"mertvergili@gmail.com",link:"mailto:mertvergili@gmail.com"},{etiket:"Instagram",deger:"@vergilistudio",link:"https://www.instagram.com/vergilistudio"}],
+  pdfLink:"", portfolioLink:"", bildirimEmail:"mertvergili@gmail.com", formEndpoint:"https://formspree.io/f/xkolbzev",
 };
 const DIL={
-  tr:{muze:"MÜZE",hakkimda:"HAKKIMDA",iletisim:"İLETİŞİM",galeriBaslik:"GALERİ",ipucu:"Tasarıma tıkla · sürükleyerek bak · ortadaki koltuğa otur",yetenekler:"YETENEKLER",deneyim:"DENEYİM & EĞİTİM",muzeyeDon:"MÜZEYE DÖN",linkKopya:"Linki kopyala",linkKopyalandi:"Link kopyalandı ✓",hikaye:"PROJE",teknik:"TEKNİK NOTLAR",gorsellerBaslik:"GÖRSELLER",pdf:"CV'Yİ İNDİR (PDF)",pdfYok:"CV YAKINDA",portfolyo:"PORTFOLYOYU İNDİR (PDF)",portfolyoYok:"PORTFOLYO YAKINDA",kumasLabel:"Kumaş",detayAc:"Detayları gör",cik:"‹ ÇIKIŞ",ilBaslik:"İletişim",formBaslik:"MESAJ GÖNDER",adPlace:"Adınız (opsiyonel)",epostaPlace:"E-posta (yanıt için)",mesajPlace:"Mesajınız",gonder:"GÖNDER",gonderMail:"E-POSTA İLE GÖNDER",formOk:"Mesajın iletildi, teşekkürler!",formMail:"E-posta uygulaman açılıyor…",formHata:"Lütfen mesaj alanını doldur.",formNotEndpoint:"Mesajın doğrudan bana iletilir.",formNotMail:"Statik site: Gönder'e basınca e-posta uygulaman açılır.",epostaGecersiz:"Geçerli bir e-posta gir ya da boş bırak."},
-  en:{muze:"MUSEUM",hakkimda:"ABOUT",iletisim:"CONTACT",galeriBaslik:"GALLERY",ipucu:"Click a design · drag to look · sit on the center seat",yetenekler:"SKILLS",deneyim:"EXPERIENCE & EDUCATION",muzeyeDon:"BACK TO MUSEUM",linkKopya:"Copy link",linkKopyalandi:"Link copied ✓",hikaye:"PROJECT",teknik:"TECHNICAL NOTES",gorsellerBaslik:"IMAGES",pdf:"DOWNLOAD CV (PDF)",pdfYok:"CV COMING SOON",portfolyo:"DOWNLOAD PORTFOLIO (PDF)",portfolyoYok:"PORTFOLIO COMING SOON",kumasLabel:"Fabric",detayAc:"View details",cik:"‹ EXIT",ilBaslik:"Contact",formBaslik:"SEND A MESSAGE",adPlace:"Your name (optional)",epostaPlace:"Email (for a reply)",mesajPlace:"Your message",gonder:"SEND",gonderMail:"SEND VIA EMAIL",formOk:"Your message was sent, thank you!",formMail:"Opening your email app…",formHata:"Please fill in the message field.",formNotEndpoint:"Your message is delivered directly to me.",formNotMail:"Static site: pressing Send opens your email app.",epostaGecersiz:"Enter a valid email or leave it empty."}
+  tr:{muze:"MÜZE",hakkimda:"HAKKIMDA",iletisim:"İLETİŞİM",galeriBaslik:"GALERİ",ipucu:"Tasarıma tıkla · sürükleyerek bak · ortadaki koltuğa otur",yetenekler:"YETENEKLER",deneyim:"DENEYİM & EĞİTİM",muzeyeDon:"MÜZEYE DÖN",linkKopya:"Linki kopyala",linkKopyalandi:"Link kopyalandı ✓",hikaye:"PROJE",teknik:"TEKNİK NOTLAR",gorsellerBaslik:"GÖRSELLER",pdf:"CV'Yİ İNDİR (PDF)",pdfYok:"CV YAKINDA",portfolyo:"PORTFOLYOYU İNDİR (PDF)",portfolyoYok:"PORTFOLYO YAKINDA",kumasLabel:"Kumaş",detayAc:"Detayları gör",cik:"‹ ÇIKIŞ",ilBaslik:"İletişim",formBaslik:"MESAJ GÖNDER",adPlace:"Adınız (opsiyonel)",epostaPlace:"E-posta (yanıt için)",mesajPlace:"Mesajınız",gonder:"GÖNDER",gonderMail:"E-POSTA İLE GÖNDER",gonderiliyor:"GÖNDERİLİYOR…",formOk:"Teşekkürler — mesajın bana ulaştı. En kısa sürede dönerim.",formMail:"E-posta uygulaman açılıyor…",formHata:"Lütfen mesaj alanını doldur.",formHataNet:"Gönderilemedi. Lütfen tekrar dene ya da doğrudan e-posta yaz.",formNotEndpoint:"Mesajın doğrudan bana iletilir.",formNotMail:"Statik site: Gönder'e basınca e-posta uygulaman açılır.",epostaGecersiz:"Geçerli bir e-posta gir ya da boş bırak."},
+  en:{muze:"MUSEUM",hakkimda:"ABOUT",iletisim:"CONTACT",galeriBaslik:"GALLERY",ipucu:"Click a design · drag to look · sit on the center seat",yetenekler:"SKILLS",deneyim:"EXPERIENCE & EDUCATION",muzeyeDon:"BACK TO MUSEUM",linkKopya:"Copy link",linkKopyalandi:"Link copied ✓",hikaye:"PROJECT",teknik:"TECHNICAL NOTES",gorsellerBaslik:"IMAGES",pdf:"DOWNLOAD CV (PDF)",pdfYok:"CV COMING SOON",portfolyo:"DOWNLOAD PORTFOLIO (PDF)",portfolyoYok:"PORTFOLIO COMING SOON",kumasLabel:"Fabric",detayAc:"View details",cik:"‹ EXIT",ilBaslik:"Contact",formBaslik:"SEND A MESSAGE",adPlace:"Your name (optional)",epostaPlace:"Email (for a reply)",mesajPlace:"Your message",gonder:"SEND",gonderMail:"SEND VIA EMAIL",gonderiliyor:"SENDING…",formOk:"Thank you — your message reached me. I'll get back to you soon.",formMail:"Opening your email app…",formHata:"Please fill in the message field.",formHataNet:"Couldn't send. Please try again or email me directly.",formNotEndpoint:"Your message is delivered directly to me.",formNotMail:"Static site: pressing Send opens your email app.",epostaGecersiz:"Enter a valid email or leave it empty."}
 };
-let SITE_SURUM=0; // yayına alınınca İNDİR ile damgalanır; eski tarayıcı kaydının yeni yayını ezmesini önler
+let SITE_SURUM=1782604800000; // bu yayın damgası (≈2026-06-28). Eski tarayıcı test kayıtları bunu ezemez → gerçek iletişim/Formspree görünür. Sonraki panel düzenlemelerin yeni ts ile bunu geçer.
 /* ===================== ★ İÇERİK SONU ★ ===================== */
 
 /* ===================== KALICI KAYIT (sadece bu tarayıcı) ===================== */
@@ -461,6 +462,13 @@ function yerTutucu(i){if(_phCache[i])return _phCache[i];const c=document.createE
   x.strokeStyle='rgba(192,38,58,.6)';x.lineWidth=2;x.strokeRect(24,24,432,592);
   x.fillStyle='rgba(233,227,213,.9)';x.font='300 150px Fraunces, serif';x.textAlign='center';x.fillText(String(i+1).padStart(2,'0'),240,330);
   x.fillStyle='rgba(184,177,161,.7)';x.font='400 18px "Space Mono", monospace';x.fillText('TASARIM / DESIGN',240,378);return _phCache[i]=c.toDataURL();}
+let _phYok=null;
+function bulunamadiURL(){if(_phYok)return _phYok;const c=document.createElement('canvas');c.width=480;c.height=600;const x=c.getContext('2d');
+  const g=x.createLinearGradient(0,0,0,600);g.addColorStop(0,'#181820');g.addColorStop(1,'#0d0d11');x.fillStyle=g;x.fillRect(0,0,480,600);
+  x.strokeStyle='rgba(233,227,213,.12)';x.lineWidth=2;x.setLineDash([8,8]);x.strokeRect(20,20,440,560);x.setLineDash([]);
+  x.fillStyle='rgba(192,38,58,.85)';x.font='300 70px Fraunces, serif';x.textAlign='center';x.fillText('×',240,300);
+  x.fillStyle='rgba(184,177,161,.75)';x.font='400 15px "Space Mono", monospace';x.fillText('GÖRSEL BULUNAMADI', 240, 350);
+  x.fillStyle='rgba(184,177,161,.45)';x.font='400 12px "Space Mono", monospace';x.fillText('IMAGE NOT FOUND', 240, 374);return _phYok=c.toDataURL();}
 function plakaDoku(d){const c=document.createElement('canvas');c.width=512;c.height=140;const x=c.getContext('2d');
   x.fillStyle='#141417';x.fillRect(0,0,512,140);x.fillStyle='#c0263a';x.fillRect(0,0,512,4);
   x.fillStyle='#e9e3d5';x.font='400 34px Fraunces, serif';x.textAlign='left';x.fillText(d.baslik[dil],26,62);
@@ -674,7 +682,7 @@ function tekerlek(e){if(introModu||document.querySelector('.sayfa.acik')||mod!==
   if(e.deltaY>4&&!sheetAcik)acSheet();} // editorial detay: scroll-down ile aç; kapatma geri butonuyla
 const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 function doldurDetay(i){const d=TASARIMLAR[i];
-  document.getElementById('d-hero-img').src=kapakUrl(d,i);
+  const hero=document.getElementById('d-hero-img');hero.onerror=()=>{hero.onerror=null;hero.src=yerTutucu(i);};hero.src=kapakUrl(d,i);
   document.getElementById('d-hero-img').alt=(d.baslik[dil]||'')+' — '+DIL[dil].kumasLabel+' '+(d.kumas[dil]||'');
   document.getElementById('d-sezon').textContent=d.sezon+' · '+(d.kumas[dil]||'');
   document.getElementById('d-baslik').textContent=d.baslik[dil];
@@ -701,7 +709,9 @@ function akisDoldur(i){const d=TASARIMLAR[i];const wrap=document.getElementById(
     const idx=fi++;const cap=(g.cap&&g.cap[dil])||'';
     return `<figure class="d-figur ${g.genis?'genis':''}"><img loading="lazy" src="${esc(g.src.trim())}" data-lb="${idx}" alt="${esc(cap||d.baslik[dil])}">${cap.trim()?`<figcaption>${esc(cap)}</figcaption>`:''}</figure>`;
   }).join('');
-  wrap.querySelectorAll('img[data-lb]').forEach(im=>{im.addEventListener('click',()=>lightboxAc(foto,+im.dataset.lb));im.addEventListener('error',()=>{im.closest('.d-figur').style.display='none';});});
+  wrap.querySelectorAll('img[data-lb]').forEach(im=>{
+    im.addEventListener('click',()=>{if(!im.classList.contains('yok'))lightboxAc(foto,+im.dataset.lb);});
+    im.addEventListener('error',()=>{im.src=bulunamadiURL();im.classList.add('yok');im.style.cursor='default';});});
 }
 function ogGuncelle(d,i){const t=d.baslik[dil]+' — '+KISI.rol[dil];document.title=t;
   const set=(p,v,attr)=>{let el=document.querySelector(`meta[${attr}="${p}"]`);if(el)el.setAttribute('content',v);};
@@ -742,13 +752,25 @@ function cvButonGuncelle(){_belgeBtn('hk-pdf',CV.pdfLink,'pdf','pdfYok');_belgeB
 const epostaGecerli=e=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 function formNotGuncelle(){const n=document.getElementById('form-not');if(n)n.textContent=CV.formEndpoint?DIL[dil].formNotEndpoint:DIL[dil].formNotMail;
   const b=document.getElementById('form-gonder');if(b)b.textContent=CV.formEndpoint?DIL[dil].gonder:DIL[dil].gonderMail;}
-async function formGonder(){const ad=document.getElementById('f-ad').value.trim(),ep=document.getElementById('f-eposta').value.trim(),ms=document.getElementById('f-mesaj').value.trim();
-  const durum=document.getElementById('form-durum');durum.className='';
-  if(!ms){durum.textContent=DIL[dil].formHata;durum.classList.add('hata');return;}              // sadece mesaj zorunlu
-  if(ep&&!epostaGecerli(ep)){durum.textContent=DIL[dil].epostaGecersiz;durum.classList.add('hata');return;} // e-posta varsa geçerli olmalı
-  if(CV.formEndpoint){try{const r=await fetch(CV.formEndpoint,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify({name:ad||'(isim yok)',email:ep||'(e-posta yok)',message:ms})});
-    if(r.ok){durum.textContent=DIL[dil].formOk;durum.classList.add('ok');document.getElementById('f-ad').value='';document.getElementById('f-eposta').value='';document.getElementById('f-mesaj').value='';return;}
-    throw new Error('fail');}catch(e){durum.textContent=DIL[dil].formMail;}}
+let formGonderiliyor=false;
+async function formGonder(){if(formGonderiliyor)return;
+  const ad=document.getElementById('f-ad').value.trim(),ep=document.getElementById('f-eposta').value.trim(),ms=document.getElementById('f-mesaj').value.trim();
+  const durum=document.getElementById('form-durum'),btn=document.getElementById('form-gonder');durum.className='';
+  if(!ms){durum.textContent=DIL[dil].formHata;durum.classList.add('hata');document.getElementById('f-mesaj').focus();return;} // sadece mesaj zorunlu
+  if(ep&&!epostaGecerli(ep)){durum.textContent=DIL[dil].epostaGecersiz;durum.classList.add('hata');return;}                    // e-posta varsa geçerli olmalı
+  if(CV.formEndpoint&&CV.formEndpoint.trim()){
+    formGonderiliyor=true;btn.disabled=true;btn.dataset.eski=btn.textContent;btn.textContent=DIL[dil].gonderiliyor;durum.textContent='';
+    try{
+      const fd=new FormData();fd.append('message',ms);if(ad)fd.append('name',ad);if(ep){fd.append('email',ep);fd.append('_replyto',ep);}
+      const r=await fetch(CV.formEndpoint.trim(),{method:'POST',headers:{'Accept':'application/json'},body:fd}); // Formspree AJAX (FormData → CORS uyumlu)
+      if(r.ok){durum.textContent=DIL[dil].formOk;durum.classList.add('ok');
+        document.getElementById('f-ad').value='';document.getElementById('f-eposta').value='';document.getElementById('f-mesaj').value='';}
+      else{let msg=DIL[dil].formHataNet;try{const j=await r.json();if(j&&j.errors&&j.errors.length)msg=j.errors.map(x=>x.message).join(' ');}catch(e){}
+        durum.textContent=msg;durum.classList.add('hata');}
+    }catch(e){durum.textContent=DIL[dil].formHataNet;durum.classList.add('hata');}
+    finally{formGonderiliyor=false;btn.disabled=false;btn.textContent=btn.dataset.eski||DIL[dil].gonder;}
+    return;
+  }
   // endpoint yoksa GERÇEK aksiyon: e-posta uygulamasını aç — sahte "gönderildi" demez
   const govde=(ad?ad+' ':'')+(ep?'('+ep+')':'')+'\n\n'+ms;
   window.open(`mailto:${CV.bildirimEmail}?subject=${encodeURIComponent('Portfolyo mesajı'+(ad?' — '+ad:''))}&body=${encodeURIComponent(govde)}`,'_blank');
@@ -814,6 +836,13 @@ function dz_tasarimSatirHTML(d,i){
       <textarea class="dz-area" data-f="teknik-tr" placeholder="Teknik notlar — kumaş/form/kalıp/dikiş (TR)">${esc(d.teknik&&d.teknik.tr)}</textarea>
       <textarea class="dz-area" data-f="teknik-en" placeholder="Technical notes (EN)">${esc(d.teknik&&d.teknik.en)}</textarea>
     </div>
+    <div class="dz-altbaslik">⚡ HIZLI KURULUM — OTOMATİK GÖRSEL YOLU OLUŞTUR</div>
+    <div class="dz-oto">
+      <span class="dz-not" style="flex-basis:100%;margin:0 0 2px">Adet + format seç → <b>cover</b> + <b>01..N</b> yolları otomatik oluşur. Sonra dosyaları aynı isimle <b>assets/projects/${esc(d.slug)}/</b> klasörüne yükle. (Mevcut galeriyi değiştirir.)</span>
+      <input class="dz-input dz-oto-adet" type="number" min="1" max="40" value="10" style="max-width:96px" aria-label="Görsel adedi">
+      <select class="dz-input dz-oto-format" style="max-width:110px" aria-label="Format"><option value="webp">webp</option><option value="jpg">jpg</option><option value="png">png</option></select>
+      <button class="dz-ekle" data-oto="${i}">Yolları oluştur</button>
+    </div>
     <div class="dz-altbaslik">KAPAK GÖRSELİ (3B duvarda + hero'da görünen)</div>
     <input class="dz-input" data-f="kapak" value="${esc(d.kapak)}" placeholder="assets/projects/${esc(d.slug)}/cover.webp veya https://...">
     <div class="dz-altbaslik">GALERİ — DETAY SAYFASI GÖRSEL AKIŞI</div>
@@ -837,7 +866,7 @@ function dz_galeriDoldur(i){
       </div>`;}
     const idx=++fi;
     return `<div class="dz-gitem2" data-k="${k}">
-      <div class="ust"><img class="dz-mini-thumb" src="${esc(g.src||'')}" alt="" onerror="this.style.opacity=.25"><span class="etiket">GÖRSEL #${idx}</span><button data-mov="${k}" data-yon="-1" title="Yukarı">▲</button><button data-mov="${k}" data-yon="1" title="Aşağı">▼</button><button class="sil" data-sil="${k}" title="Sil">×</button></div>
+      <div class="ust"><img class="dz-mini-thumb" src="${esc(g.src||'')}" alt="" onerror="this.onerror=null;this.src=bulunamadiURL();this.title='Bu görsel bulunamadı — path/dosya adını kontrol et'"><span class="etiket">GÖRSEL #${idx}</span><button data-mov="${k}" data-yon="-1" title="Yukarı">▲</button><button data-mov="${k}" data-yon="1" title="Aşağı">▼</button><button class="sil" data-sil="${k}" title="Sil">×</button></div>
       <input class="dz-input" data-gf="src" value="${esc(g.src||'')}" placeholder="assets/projects/${esc(TASARIMLAR[i].slug)}/01.webp veya https://..." style="margin-bottom:8px">
       <div class="dz-grid"><input class="dz-input" data-gf="cap-tr" value="${esc(g.cap&&g.cap.tr)}" placeholder="Açıklama (TR)"><input class="dz-input" data-gf="cap-en" value="${esc(g.cap&&g.cap.en)}" placeholder="Caption (EN)"></div>
       <label class="dz-onay"><input type="checkbox" data-gf="genis" ${g.genis?'checked':''}> Tam genişlik göster (kapatınca 2 kolon grid)</label>
@@ -850,7 +879,7 @@ function dz_galeriDoldur(i){
 function dz_galeriItemGuncelle(i,e){const k=+e.target.closest('.dz-gitem2').dataset.k;const gf=e.target.dataset.gf;const g=TASARIMLAR[i].galeri[k];if(!g)return;
   if(gf==='metin-tr'){g.metin=g.metin||{};g.metin.tr=e.target.value;}
   else if(gf==='metin-en'){g.metin=g.metin||{};g.metin.en=e.target.value;}
-  else if(gf==='src'){g.src=e.target.value;const th=e.target.closest('.dz-gitem2').querySelector('.dz-mini-thumb');if(th){th.src=e.target.value;th.style.opacity='';}}
+  else if(gf==='src'){g.src=e.target.value;const th=e.target.closest('.dz-gitem2').querySelector('.dz-mini-thumb');if(th){th.onerror=()=>{th.onerror=null;th.src=bulunamadiURL();th.title='Bu görsel bulunamadı — path/dosya adını kontrol et';};th.title='';th.src=e.target.value;}}
   else if(gf==='cap-tr'){g.cap=g.cap||{};g.cap.tr=e.target.value;}
   else if(gf==='cap-en'){g.cap=g.cap||{};g.cap.en=e.target.value;}
   else if(gf==='genis'){g.genis=e.target.checked;}
@@ -865,12 +894,27 @@ function dz_galeriSil(i,k){TASARIMLAR[i].galeri.splice(k,1);dz_galeriDoldur(i);i
 function dz_galeriTasi(i,k,yon){const l=TASARIMLAR[i].galeri;const j=k+yon;if(j<0||j>=l.length)return;[l[k],l[j]]=[l[j],l[k]];dz_galeriDoldur(i);if(mod==='eser'&&aktifEser===i)doldurDetay(i);otomatikKaydet();}
 function dz_galeriEkleFoto(i){TASARIMLAR[i].galeri.push({tip:'foto',src:'',cap:{tr:'',en:''},genis:false});dz_galeriDoldur(i);otomatikKaydet();}
 function dz_galeriEkleBaslik(i){TASARIMLAR[i].galeri.push({tip:'baslik',metin:{tr:'',en:''}});dz_galeriDoldur(i);otomatikKaydet();}
+function dz_otoPath(i,card){
+  const slug=(TASARIMLAR[i].slug||slugYap(TASARIMLAR[i].baslik.en||('design-'+(i+1))));TASARIMLAR[i].slug=slug;
+  let adet=parseInt(card.querySelector('.dz-oto-adet').value,10);if(!(adet>=1))adet=10;adet=Math.min(adet,40);
+  const fmt=card.querySelector('.dz-oto-format').value||'webp';
+  const taban='assets/projects/'+slug+'/';
+  if((TASARIMLAR[i].galeri&&TASARIMLAR[i].galeri.length)&&!confirm('Bu tasarımın mevcut galeri öğeleri otomatik oluşturulan '+adet+' yol ile değiştirilecek. Devam edilsin mi?'))return;
+  TASARIMLAR[i].kapak=taban+'cover.'+fmt;
+  TASARIMLAR[i].galeri=[];for(let n=1;n<=adet;n++){TASARIMLAR[i].galeri.push({tip:'foto',src:taban+String(n).padStart(2,'0')+'.'+fmt,cap:{tr:'',en:''},genis:false});}
+  // kapak inputu + galeri editörünü tazele
+  const ki=card.querySelector('input[data-f="kapak"]');if(ki)ki.value=TASARIMLAR[i].kapak;
+  const si=card.querySelector('input[data-f="slug"]');if(si)si.value=slug;
+  dz_galeriDoldur(i);dz_kapakGuncelle(i);if(mod==='eser'&&aktifEser===i)doldurDetay(i);otomatikKaydet();
+  alert(adet+' görsel yolu oluşturuldu ✓\nŞimdi dosyalarını şu isimlerle '+taban+' klasörüne yükle:\ncover.'+fmt+', 01.'+fmt+', 02.'+fmt+' …');
+}
 function dz_tasarimlarDoldur(){
   document.getElementById('dz-tasarimlar').innerHTML=TASARIMLAR.map((d,i)=>dz_tasarimSatirHTML(d,i)).join('');
   document.querySelectorAll('#dz-tasarimlar input[data-f]').forEach(el=>el.addEventListener('input',dz_tasarimGuncelle));
   document.querySelectorAll('#dz-tasarimlar textarea[data-f]').forEach(el=>el.addEventListener('input',dz_tasarimGuncelle));
   document.querySelectorAll('#dz-tasarimlar [data-foto-ekle]').forEach(b=>b.addEventListener('click',()=>dz_galeriEkleFoto(+b.dataset.fotoEkle)));
   document.querySelectorAll('#dz-tasarimlar [data-baslik-ekle]').forEach(b=>b.addEventListener('click',()=>dz_galeriEkleBaslik(+b.dataset.baslikEkle)));
+  document.querySelectorAll('#dz-tasarimlar [data-oto]').forEach(b=>b.addEventListener('click',()=>dz_otoPath(+b.dataset.oto,b.closest('.dz-card'))));
   TASARIMLAR.forEach((d,i)=>dz_galeriDoldur(i));
 }
 function dz_tasarimGuncelle(e){
