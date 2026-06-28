@@ -41,6 +41,12 @@
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%;height:100dvh;background:#000;overflow:hidden;font-family:'Inter',system-ui,sans-serif;color:var(--bone)}
   canvas{display:block;touch-action:none}
+  /* Koyu/minimal scroll bar — karanlık temaya uyumlu (Chrome/Edge/Safari + Firefox) */
+  #galeri,#detay,.sayfa{scrollbar-width:thin;scrollbar-color:rgba(233,227,213,.22) transparent}
+  #galeri::-webkit-scrollbar,#detay::-webkit-scrollbar,.sayfa::-webkit-scrollbar{width:8px;height:8px}
+  #galeri::-webkit-scrollbar-track,#detay::-webkit-scrollbar-track,.sayfa::-webkit-scrollbar-track{background:transparent}
+  #galeri::-webkit-scrollbar-thumb,#detay::-webkit-scrollbar-thumb,.sayfa::-webkit-scrollbar-thumb{background:rgba(233,227,213,.18);border-radius:8px;border:2px solid transparent;background-clip:padding-box}
+  #galeri::-webkit-scrollbar-thumb:hover,#detay::-webkit-scrollbar-thumb:hover,.sayfa::-webkit-scrollbar-thumb:hover{background:rgba(192,38,58,.55);background-clip:padding-box}
   /* Ekran okuyucu / arama motoru için görünmez ama okunabilir içerik */
   .gizli-seo{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   #ust-bar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:18px 30px;background:linear-gradient(180deg,var(--bar),transparent);opacity:0;transition:opacity 1.2s;pointer-events:none}
@@ -89,7 +95,11 @@
   .ds-handle span{width:46px;height:4px;border-radius:4px;background:var(--bone-dim);opacity:.6}
   .ds-wrap{max-width:1000px;margin:0 auto;display:flex;gap:46px;padding:6px 40px 70px;flex-wrap:wrap}
   .ds-gorsel{flex:1 1 320px;min-width:280px}
-  #d-gorsel{width:100%;max-height:64vh;max-height:64dvh;object-fit:contain;border-radius:4px;background:var(--ink-2);border:1px solid var(--line)}
+  #d-gorsel{width:100%;aspect-ratio:3/4;max-height:64vh;max-height:64dvh;object-fit:contain;border-radius:4px;background:var(--ink-2);border:1px solid var(--line)}
+  #d-thumbs{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  #d-thumbs img{width:54px;height:54px;object-fit:cover;border-radius:4px;border:1px solid var(--line);cursor:pointer;opacity:.55;transition:opacity .25s,border-color .25s}
+  #d-thumbs img:hover{opacity:.85}
+  #d-thumbs img.aktif{opacity:1;border-color:var(--crimson)}
   #d-galeri-nav{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
   #d-galeri-nav button{background:none;border:1px solid var(--line);color:var(--bone);width:36px;height:36px;border-radius:50%;cursor:pointer;transition:all .3s}
   #d-galeri-nav button:hover{background:var(--crimson);border-color:var(--crimson);color:#fff}
@@ -128,8 +138,10 @@
   #form-gonder:hover{opacity:.85}
   #form-durum{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:1px;min-height:18px;color:var(--bone-dim)}
   #form-durum.ok{color:#2f9e5f}#form-durum.hata{color:var(--crimson)}
-  #hk-pdf{margin-top:46px;padding:15px 38px;background:none;color:var(--bone);border:1px solid var(--line);cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:3px;text-transform:uppercase;border-radius:3px;transition:all .3s}
-  #hk-pdf:hover{background:var(--crimson);border-color:var(--crimson);color:#fff}
+  .hk-belgeler{margin-top:46px;display:flex;gap:14px;flex-wrap:wrap}
+  #hk-pdf,#hk-portfolio{padding:15px 38px;background:none;color:var(--bone);border:1px solid var(--line);cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:3px;text-transform:uppercase;border-radius:3px;transition:all .3s}
+  #hk-pdf:hover:not(:disabled),#hk-portfolio:hover:not(:disabled){background:var(--crimson);border-color:var(--crimson);color:#fff}
+  #form-not{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;color:var(--bone-dim);margin-top:6px;line-height:1.6}
   #yukleme{position:fixed;inset:0;z-index:55;background:#000;display:flex;align-items:center;justify-content:center;color:#b8b1a1;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:3px;text-align:center;padding:20px}
   #duzenle-btn{display:none;background:none;border:1px solid var(--line);color:var(--bone-dim);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:13px;transition:all .3s}
   #duzenle-btn:hover{color:var(--bone);border-color:var(--bone-dim)}
@@ -144,6 +156,15 @@
   .dz-foto label{font-family:'Space Mono',monospace;font-size:11px;color:var(--bone-dim);cursor:pointer;border:1px solid var(--line);padding:9px 16px;border-radius:20px;transition:all .3s}
   .dz-foto label:hover{border-color:var(--crimson);color:var(--bone)}
   .dz-foto input[type=file]{display:none}
+  .dz-galeri{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .dz-gitem{position:relative;width:74px;height:96px;border-radius:5px;overflow:hidden;border:1px solid var(--line);background:var(--ink-2)}
+  .dz-gitem img{width:100%;height:100%;object-fit:cover;display:block}
+  .dz-gitem .dz-gsil{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;border:none;background:rgba(8,8,10,.8);color:var(--bone);cursor:pointer;font-size:13px;line-height:1;display:flex;align-items:center;justify-content:center}
+  .dz-gitem .dz-gsil:hover{background:var(--crimson);color:#fff}
+  .dz-gitem .dz-gmov{position:absolute;bottom:3px;background:rgba(8,8,10,.8);color:var(--bone);border:none;cursor:pointer;width:20px;height:20px;font-size:12px;line-height:1;display:flex;align-items:center;justify-content:center;border-radius:3px}
+  .dz-gitem .dz-gmov.sol{left:3px}.dz-gitem .dz-gmov.sag{right:3px}
+  .dz-gitem .dz-gmov:hover{background:var(--crimson);color:#fff}
+  .dz-gitem .dz-kapak{position:absolute;top:3px;left:3px;background:var(--crimson);color:#fff;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;padding:2px 5px;border-radius:3px}
   .dz-mini-sil{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--bone-dim);cursor:pointer;font-size:18px}
   .dz-mini-sil:hover{color:var(--crimson)}
   .dz-ekle{margin-top:14px;background:none;border:1px dashed var(--line);color:var(--bone-dim);padding:10px 18px;border-radius:20px;cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1px;transition:all .3s}
@@ -198,7 +219,7 @@
 <div id="detay">
   <div class="ds-handle" id="ds-kapat"><span></span></div>
   <div class="ds-wrap">
-    <div class="ds-gorsel"><img id="d-gorsel" alt="Tasarım görseli" /><div id="d-galeri-nav"><button id="d-onceki" aria-label="Önceki görsel">‹</button><div id="d-sayac">1 / 1</div><button id="d-sonraki" aria-label="Sonraki görsel">›</button></div></div>
+    <div class="ds-gorsel"><img id="d-gorsel" alt="Tasarım görseli" /><div id="d-galeri-nav"><button id="d-onceki" aria-label="Önceki görsel">‹</button><div id="d-sayac">1 / 1</div><button id="d-sonraki" aria-label="Sonraki görsel">›</button></div><div id="d-thumbs"></div></div>
     <div class="ds-bilgi"><div id="d-sezon"></div><h2 id="d-baslik"></h2><div id="d-meta"></div><p id="d-konsept"></p></div>
   </div>
 </div>
@@ -207,14 +228,14 @@
   <div class="sf-wrap"><div class="sf-ad" id="hk-ad"></div><div class="sf-rol" id="hk-rol"></div><p id="hk-bio"></p>
     <div class="sf-bolum"><h3 data-i18n="yetenekler">YETENEKLER</h3><div class="hk-skills" id="hk-skills"></div></div>
     <div class="sf-bolum"><h3 data-i18n="deneyim">DENEYİM & EĞİTİM</h3><div id="hk-deneyim"></div></div>
-    <button id="hk-pdf" data-i18n="pdf">CV'Yİ İNDİR (PDF)</button></div>
+    <div class="hk-belgeler"><button id="hk-pdf" data-i18n="pdf">CV'Yİ İNDİR (PDF)</button><button id="hk-portfolio" data-i18n="portfolyo">PORTFOLYOYU İNDİR (PDF)</button></div></div>
 </section>
 <section id="iletisim" class="sayfa" aria-label="İletişim">
   <button class="sf-kapat" data-kapat="iletisim" aria-label="Kapat">×</button>
   <div class="sf-wrap"><div class="sf-ad" id="il-baslik">İletişim</div><div class="sf-rol" id="il-rol"></div>
     <div class="sf-bolum"><h3 data-i18n="iletisim">İLETİŞİM</h3><div id="il-iletisim"></div></div>
     <div class="sf-bolum"><h3 data-i18n="formBaslik">MESAJ GÖNDER</h3>
-      <div id="form-alan"><input id="f-ad" type="text" data-ph="adPlace" placeholder="Adınız" aria-label="Adınız" /><input id="f-eposta" type="email" data-ph="epostaPlace" placeholder="E-posta" aria-label="E-posta" /><textarea id="f-mesaj" data-ph="mesajPlace" placeholder="Mesajınız" aria-label="Mesajınız"></textarea><button id="form-gonder" data-i18n="gonder">GÖNDER</button><div id="form-durum"></div></div>
+      <div id="form-alan"><textarea id="f-mesaj" data-ph="mesajPlace" placeholder="Mesajınız" aria-label="Mesajınız"></textarea><input id="f-eposta" type="email" data-ph="epostaPlace" placeholder="E-posta (yanıt için)" aria-label="E-posta" /><input id="f-ad" type="text" data-ph="adPlace" placeholder="Adınız (opsiyonel)" aria-label="Adınız" /><button id="form-gonder">GÖNDER</button><div id="form-not"></div><div id="form-durum"></div></div>
     </div></div>
 </section>
 
@@ -251,6 +272,15 @@
       </div>
       <input type="file" id="dz-cv-pdf" accept="application/pdf" style="display:none">
       <span id="dz-cv-pdf-ad" class="dz-not"></span>
+
+      <p class="dz-not" style="margin-top:24px">Portfolyo ekle — aynı mantık. Boş bırakırsan butonda <b>"PORTFOLYO YAKINDA"</b> görünür (pasif).</p>
+      <input class="dz-input" id="dz-portfolio-url" style="margin-top:10px" placeholder="Portfolyo PDF linki (https://... — Drive/Dropbox/Behance vb.)">
+      <div class="dz-alt-aksiyon">
+        <button class="dz-ekle" id="dz-portfolio-pdf-lbl">+ Bilgisayardan PDF Yükle</button>
+        <button class="dz-ekle" id="dz-portfolio-sil">Portfolyoyu kaldır</button>
+      </div>
+      <input type="file" id="dz-portfolio-pdf" accept="application/pdf" style="display:none">
+      <span id="dz-portfolio-pdf-ad" class="dz-not"></span>
     </div>
 
     <div class="sf-bolum"><h3>DENEYİM & EĞİTİM</h3><div id="dz-deneyim"></div><button class="dz-ekle" id="dz-deneyim-ekle">+ Satır Ekle</button></div>
@@ -287,13 +317,13 @@ let CV={
   ad:{tr:"Mert Vergili",en:"Mert Vergili"},
   bio:{tr:"İstanbul merkezli bir fashion design öğrencisiyim. Patternmaking ve drape tekniklerinin yapısal disiplinini, görsel sanat yönetiminin sezgisiyle birleştiriyorum.",en:"I'm an Istanbul-based fashion design student. I combine the structural discipline of patternmaking and draping with the intuition of visual art direction."},
   skills:["Patternmaking","Draping","Tasarım Eskizi","Tekstil Bilgisi","Adobe Illustrator","Photoshop","CLO 3D","Görsel Yönetim"],
-  deneyim:[{yil:"2023—",tr:{b:"Fashion Design — Lisans",p:"Üniversite / Bölüm adını buraya yaz."},en:{b:"Fashion Design — BA",p:"Write your university / program here."}},{yil:"2024",tr:{b:"Atölye / Staj",p:"Deneyim açıklamasını buraya yaz."},en:{b:"Atelier / Internship",p:"Write your experience here."}}],
+  deneyim:[{yil:{tr:"2023—",en:"2023—"},tr:{b:"Fashion Design — Lisans",p:"Üniversite / Bölüm adını buraya yaz."},en:{b:"Fashion Design — BA",p:"Write your university / program here."}},{yil:{tr:"2024",en:"2024"},tr:{b:"Atölye / Staj",p:"Deneyim açıklamasını buraya yaz."},en:{b:"Atelier / Internship",p:"Write your experience here."}}],
   iletisim:[{etiket:"E-posta",deger:"mert@ornek.com",link:"mailto:mert@ornek.com"},{etiket:"Instagram",deger:"@mertvergili",link:"https://instagram.com/"},{etiket:"Behance",deger:"behance.net/mertvergili",link:"https://behance.net/"}],
-  pdfLink:"", bildirimEmail:"mert@ornek.com", formEndpoint:"",
+  pdfLink:"", portfolioLink:"", bildirimEmail:"mert@ornek.com", formEndpoint:"",
 };
 const DIL={
-  tr:{muze:"MÜZE",hakkimda:"HAKKIMDA",iletisim:"İLETİŞİM",galeriBaslik:"GALERİ",ipucu:"Tasarıma tıkla · sürükleyerek bak · ortadaki koltuğa otur",yetenekler:"YETENEKLER",deneyim:"DENEYİM & EĞİTİM",pdf:"CV'Yİ İNDİR (PDF)",pdfYok:"CV YAKINDA",kumasLabel:"Kumaş",detayAc:"Detayları gör",cik:"‹ ÇIKIŞ",ilBaslik:"İletişim",formBaslik:"MESAJ GÖNDER",adPlace:"Adınız",epostaPlace:"E-posta",mesajPlace:"Mesajınız",gonder:"GÖNDER",formOk:"Mesajın iletildi, teşekkürler!",formMail:"E-posta uygulaman açılıyor…",formHata:"Lütfen tüm alanları doldur."},
-  en:{muze:"MUSEUM",hakkimda:"ABOUT",iletisim:"CONTACT",galeriBaslik:"GALLERY",ipucu:"Click a design · drag to look · sit on the center seat",yetenekler:"SKILLS",deneyim:"EXPERIENCE & EDUCATION",pdf:"DOWNLOAD CV (PDF)",pdfYok:"CV COMING SOON",kumasLabel:"Fabric",detayAc:"View details",cik:"‹ EXIT",ilBaslik:"Contact",formBaslik:"SEND A MESSAGE",adPlace:"Your name",epostaPlace:"Email",mesajPlace:"Your message",gonder:"SEND",formOk:"Your message was sent, thank you!",formMail:"Opening your email app…",formHata:"Please fill in all fields."}
+  tr:{muze:"MÜZE",hakkimda:"HAKKIMDA",iletisim:"İLETİŞİM",galeriBaslik:"GALERİ",ipucu:"Tasarıma tıkla · sürükleyerek bak · ortadaki koltuğa otur",yetenekler:"YETENEKLER",deneyim:"DENEYİM & EĞİTİM",pdf:"CV'Yİ İNDİR (PDF)",pdfYok:"CV YAKINDA",portfolyo:"PORTFOLYOYU İNDİR (PDF)",portfolyoYok:"PORTFOLYO YAKINDA",kumasLabel:"Kumaş",detayAc:"Detayları gör",cik:"‹ ÇIKIŞ",ilBaslik:"İletişim",formBaslik:"MESAJ GÖNDER",adPlace:"Adınız (opsiyonel)",epostaPlace:"E-posta (yanıt için)",mesajPlace:"Mesajınız",gonder:"GÖNDER",gonderMail:"E-POSTA İLE GÖNDER",formOk:"Mesajın iletildi, teşekkürler!",formMail:"E-posta uygulaman açılıyor…",formHata:"Lütfen mesaj alanını doldur.",formNotEndpoint:"Mesajın doğrudan bana iletilir.",formNotMail:"Statik site: Gönder'e basınca e-posta uygulaman açılır.",epostaGecersiz:"Geçerli bir e-posta gir ya da boş bırak."},
+  en:{muze:"MUSEUM",hakkimda:"ABOUT",iletisim:"CONTACT",galeriBaslik:"GALLERY",ipucu:"Click a design · drag to look · sit on the center seat",yetenekler:"SKILLS",deneyim:"EXPERIENCE & EDUCATION",pdf:"DOWNLOAD CV (PDF)",pdfYok:"CV COMING SOON",portfolyo:"DOWNLOAD PORTFOLIO (PDF)",portfolyoYok:"PORTFOLIO COMING SOON",kumasLabel:"Fabric",detayAc:"View details",cik:"‹ EXIT",ilBaslik:"Contact",formBaslik:"SEND A MESSAGE",adPlace:"Your name (optional)",epostaPlace:"Email (for a reply)",mesajPlace:"Your message",gonder:"SEND",gonderMail:"SEND VIA EMAIL",formOk:"Your message was sent, thank you!",formMail:"Opening your email app…",formHata:"Please fill in the message field.",formNotEndpoint:"Your message is delivered directly to me.",formNotMail:"Static site: pressing Send opens your email app.",epostaGecersiz:"Enter a valid email or leave it empty."}
 };
 let SITE_SURUM=0; // yayına alınınca İNDİR ile damgalanır; eski tarayıcı kaydının yeni yayını ezmesini önler
 /* ===================== ★ İÇERİK SONU ★ ===================== */
@@ -333,7 +363,12 @@ function otomatikKaydet(){
     else{el.textContent='Kaydedilemedi (tarayıcı depolaması dolu) — İNDİR ile yedekle.';el.style.color='#c0263a';}
   },350);
 }
-veriYukle(); // varsa kayıtlı içeriği baştan uygula
+function migrasyon(){ // eski kayıtları yeni modele uyarla (geriye dönük uyumluluk)
+  if(typeof CV.portfolioLink!=='string')CV.portfolioLink='';
+  if(Array.isArray(CV.deneyim))CV.deneyim.forEach(d=>{if(typeof d.yil!=='object'||d.yil===null){const s=d.yil||'';d.yil={tr:s,en:s};}else{d.yil.tr=d.yil.tr||'';d.yil.en=d.yil.en||'';}});
+  if(Array.isArray(TASARIMLAR))TASARIMLAR.forEach(t=>{if(!Array.isArray(t.gorseller))t.gorseller=[];});
+}
+veriYukle(); migrasyon(); // varsa kayıtlı içeriği baştan uygula + modele uyarla
 /* ============================================================================ */
 
 let dil="tr",mod="genel";
@@ -566,7 +601,10 @@ function doldurDetay(i){const d=TASARIMLAR[i];document.getElementById('d-sezon')
   document.getElementById('d-konsept').textContent=d.konsept[dil];galeriGuncelle(i);}
 function galeriGuncelle(i){const d=TASARIMLAR[i];const l=(d.gorseller&&d.gorseller.length)?d.gorseller:[yerTutucu(i)];
   if(galeriIndex<0)galeriIndex=l.length-1;if(galeriIndex>=l.length)galeriIndex=0;
-  document.getElementById('d-gorsel').src=l[galeriIndex];document.getElementById('d-sayac').textContent=(galeriIndex+1)+' / '+l.length;}
+  document.getElementById('d-gorsel').src=l[galeriIndex];document.getElementById('d-sayac').textContent=(galeriIndex+1)+' / '+l.length;
+  const nav=document.getElementById('d-galeri-nav');if(nav)nav.style.visibility=l.length>1?'visible':'hidden';
+  const tw=document.getElementById('d-thumbs');if(tw){tw.innerHTML=l.length>1?l.map((src,k)=>`<img src="${src}" data-k="${k}" class="${k===galeriIndex?'aktif':''}" alt="">`).join(''):'';
+    tw.querySelectorAll('img').forEach(im=>im.addEventListener('click',()=>{galeriIndex=+im.dataset.k;galeriGuncelle(i);}));}}
 
 function seoIcerikDoldur(){const el=document.getElementById('seo-icerik');if(!el)return;
   el.innerHTML=`<h1>${CV.ad[dil]} — ${KISI.rol[dil]}</h1><p>${CV.bio[dil]}</p>`+
@@ -579,20 +617,31 @@ function dilUygula(){const t=DIL[dil];document.querySelectorAll('[data-i18n]').f
   document.getElementById('il-baslik').textContent=t.ilBaslik;document.getElementById('il-rol').textContent=KISI.rol[dil];
   document.documentElement.lang=dil;document.title=CV.ad[dil]+' — '+KISI.rol[dil];
   plakalar.forEach(p=>{p.mesh.material.map=plakaDoku(p.data);p.mesh.material.needsUpdate=true;});
-  if(mod==='eser')doldurDetay(aktifEser);cvDoldur();galeriListesi();seoIcerikDoldur();}
+  if(mod==='eser')doldurDetay(aktifEser);cvDoldur();galeriListesi();seoIcerikDoldur();formNotGuncelle();}
 function cvDoldur(){document.getElementById('hk-ad').textContent=CV.ad[dil];document.getElementById('hk-rol').textContent=KISI.rol[dil];document.getElementById('hk-bio').textContent=CV.bio[dil];
   document.getElementById('hk-skills').innerHTML=CV.skills.map(s=>`<span>${s}</span>`).join('');
-  document.getElementById('hk-deneyim').innerHTML=CV.deneyim.map(d=>`<div class="hk-satir"><div class="yil">${d.yil}</div><div class="ic"><h4>${d[dil].b}</h4><p>${d[dil].p}</p></div></div>`).join('');
+  document.getElementById('hk-deneyim').innerHTML=CV.deneyim.map(d=>`<div class="hk-satir"><div class="yil">${yilMetni(d)}</div><div class="ic"><h4>${d[dil].b}</h4><p>${d[dil].p}</p></div></div>`).join('');
   document.getElementById('il-iletisim').innerHTML=CV.iletisim.map(c=>`<a href="${c.link}" target="_blank" rel="noopener">${c.etiket} — ${c.deger}</a>`).join('');cvButonGuncelle();seoIcerikDoldur();}
-function cvButonGuncelle(){const b=document.getElementById('hk-pdf');if(!b)return;
-  if(CV.pdfLink&&CV.pdfLink.trim()){b.disabled=false;b.style.opacity='';b.style.cursor='pointer';b.textContent=DIL[dil].pdf;}
-  else{b.disabled=true;b.style.opacity='.4';b.style.cursor='not-allowed';b.textContent=DIL[dil].pdfYok;}}
+function yilMetni(d){return (d.yil&&typeof d.yil==='object')?(d.yil[dil]||d.yil.tr||d.yil.en||''):(d.yil||'');}
+function _belgeBtn(id,link,varKey,yokKey){const b=document.getElementById(id);if(!b)return;
+  if(link&&link.trim()){b.disabled=false;b.style.opacity='';b.style.cursor='pointer';b.textContent=DIL[dil][varKey];}
+  else{b.disabled=true;b.style.opacity='.4';b.style.cursor='not-allowed';b.textContent=DIL[dil][yokKey];}}
+function cvButonGuncelle(){_belgeBtn('hk-pdf',CV.pdfLink,'pdf','pdfYok');_belgeBtn('hk-portfolio',CV.portfolioLink,'portfolyo','portfolyoYok');}
 
+const epostaGecerli=e=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+function formNotGuncelle(){const n=document.getElementById('form-not');if(n)n.textContent=CV.formEndpoint?DIL[dil].formNotEndpoint:DIL[dil].formNotMail;
+  const b=document.getElementById('form-gonder');if(b)b.textContent=CV.formEndpoint?DIL[dil].gonder:DIL[dil].gonderMail;}
 async function formGonder(){const ad=document.getElementById('f-ad').value.trim(),ep=document.getElementById('f-eposta').value.trim(),ms=document.getElementById('f-mesaj').value.trim();
-  const durum=document.getElementById('form-durum');durum.className='';if(!ad||!ep||!ms){durum.textContent=DIL[dil].formHata;durum.classList.add('hata');return;}
-  if(CV.formEndpoint){try{const r=await fetch(CV.formEndpoint,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify({name:ad,email:ep,message:ms})});
-    if(r.ok){durum.textContent=DIL[dil].formOk;durum.classList.add('ok');document.getElementById('f-ad').value='';document.getElementById('f-eposta').value='';document.getElementById('f-mesaj').value='';return;}}catch(e){}}
-  window.open(`mailto:${CV.bildirimEmail}?subject=${encodeURIComponent('Portfolyo mesajı — '+ad)}&body=${encodeURIComponent(ad+' ('+ep+'):\n\n'+ms)}`,'_blank');durum.textContent=DIL[dil].formMail;durum.classList.add('ok');}
+  const durum=document.getElementById('form-durum');durum.className='';
+  if(!ms){durum.textContent=DIL[dil].formHata;durum.classList.add('hata');return;}              // sadece mesaj zorunlu
+  if(ep&&!epostaGecerli(ep)){durum.textContent=DIL[dil].epostaGecersiz;durum.classList.add('hata');return;} // e-posta varsa geçerli olmalı
+  if(CV.formEndpoint){try{const r=await fetch(CV.formEndpoint,{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify({name:ad||'(isim yok)',email:ep||'(e-posta yok)',message:ms})});
+    if(r.ok){durum.textContent=DIL[dil].formOk;durum.classList.add('ok');document.getElementById('f-ad').value='';document.getElementById('f-eposta').value='';document.getElementById('f-mesaj').value='';return;}
+    throw new Error('fail');}catch(e){durum.textContent=DIL[dil].formMail;}}
+  // endpoint yoksa GERÇEK aksiyon: e-posta uygulamasını aç — sahte "gönderildi" demez
+  const govde=(ad?ad+' ':'')+(ep?'('+ep+')':'')+'\n\n'+ms;
+  window.open(`mailto:${CV.bildirimEmail}?subject=${encodeURIComponent('Portfolyo mesajı'+(ad?' — '+ad:''))}&body=${encodeURIComponent(govde)}`,'_blank');
+  durum.textContent=DIL[dil].formMail;durum.classList.add('ok');}
 
 /* intro — otomatik geçiş (logo ~3 sn) */
 let girisYapildi=false;
@@ -620,6 +669,7 @@ document.getElementById('d-onceki').addEventListener('click',()=>{galeriIndex--;
 document.getElementById('d-sonraki').addEventListener('click',()=>{galeriIndex++;galeriGuncelle(aktifEser);});
 document.getElementById('form-gonder').addEventListener('click',formGonder);
 document.getElementById('hk-pdf').addEventListener('click',()=>{if(CV.pdfLink&&CV.pdfLink.trim())window.open(CV.pdfLink,'_blank','noopener');});
+document.getElementById('hk-portfolio').addEventListener('click',()=>{if(CV.portfolioLink&&CV.portfolioLink.trim())window.open(CV.portfolioLink,'_blank','noopener');});
 
 /* ===================== DÜZENLEME PANELİ ===================== */
 function resimSikistir(file,maxW,kalite){
@@ -645,17 +695,32 @@ function dz_tasarimSatirHTML(d,i){
       <textarea class="dz-area" data-f="konsept-tr" placeholder="Konsept metni (TR)">${d.konsept.tr||''}</textarea>
       <textarea class="dz-area" data-f="konsept-en" placeholder="Konsept metni (EN)">${d.konsept.en||''}</textarea>
     </div>
-    <div class="dz-foto">
-      <img class="dz-thumb" id="dz-thumb-${i}" src="${(d.gorseller&&d.gorseller[0])?d.gorseller[0]:yerTutucu(i)}" alt="">
-      <label>Fotoğraf Değiştir<input type="file" accept="image/*" data-foto="${i}"></label>
-    </div>
+    <div class="dz-galeri" id="dz-galeri-${i}"></div>
+    <label class="dz-ekle" style="display:inline-block">+ Fotoğraf Ekle (çoklu seçebilirsin)<input type="file" accept="image/*" multiple data-foto="${i}" style="display:none"></label>
+    <span class="dz-not" id="dz-foto-durum-${i}" style="margin-left:10px"></span>
   </div>`;
 }
+function dz_galeriDoldur(i){
+  const wrap=document.getElementById('dz-galeri-'+i);if(!wrap)return;
+  const l=TASARIMLAR[i].gorseller||[];
+  if(!l.length){wrap.innerHTML='<span class="dz-not">Henüz görsel yok — ilk eklediğin <b>kapak</b> olur (3B duvarda görünen).</span>';return;}
+  wrap.innerHTML=l.map((src,k)=>`<div class="dz-gitem" data-k="${k}">${k===0?'<span class="dz-kapak">KAPAK</span>':''}<img src="${src}" alt=""><button class="dz-gmov sol" data-mov="${k}" data-yon="-1" title="Sola">‹</button><button class="dz-gmov sag" data-mov="${k}" data-yon="1" title="Sağa">›</button><button class="dz-gsil" data-sil="${k}" title="Sil">×</button></div>`).join('');
+  wrap.querySelectorAll('[data-sil]').forEach(b=>b.addEventListener('click',()=>dz_fotoSil(i,+b.dataset.sil)));
+  wrap.querySelectorAll('[data-mov]').forEach(b=>b.addEventListener('click',()=>dz_fotoTasi(i,+b.dataset.mov,+b.dataset.yon)));
+}
+function dz_kapakGuncelle(i){ // 3B duvar eseri + galeri listesi + açık detay = gorseller[0]
+  const url=(TASARIMLAR[i].gorseller&&TASARIMLAR[i].gorseller[0])?TASARIMLAR[i].gorseller[0]:yerTutucu(i);
+  if(eserMeshler[i]){new THREE.TextureLoader().load(url,t=>{t.anisotropy=maxAniso;eserMeshler[i].material.map=t;eserMeshler[i].material.needsUpdate=true;});}
+  galeriListesi();if(mod==='eser'&&aktifEser===i)galeriGuncelle(i);
+}
+function dz_fotoSil(i,k){TASARIMLAR[i].gorseller.splice(k,1);dz_galeriDoldur(i);dz_kapakGuncelle(i);otomatikKaydet();}
+function dz_fotoTasi(i,k,yon){const l=TASARIMLAR[i].gorseller;const j=k+yon;if(j<0||j>=l.length)return;[l[k],l[j]]=[l[j],l[k]];dz_galeriDoldur(i);dz_kapakGuncelle(i);otomatikKaydet();}
 function dz_tasarimlarDoldur(){
   document.getElementById('dz-tasarimlar').innerHTML=TASARIMLAR.map((d,i)=>dz_tasarimSatirHTML(d,i)).join('');
   document.querySelectorAll('#dz-tasarimlar input[data-f]').forEach(el=>el.addEventListener('input',dz_tasarimGuncelle));
   document.querySelectorAll('#dz-tasarimlar textarea[data-f]').forEach(el=>el.addEventListener('input',dz_tasarimGuncelle));
   document.querySelectorAll('#dz-tasarimlar input[data-foto]').forEach(el=>el.addEventListener('change',dz_fotoYukle));
+  TASARIMLAR.forEach((d,i)=>dz_galeriDoldur(i));
 }
 function dz_tasarimGuncelle(e){
   const card=e.target.closest('.dz-card');const i=+card.dataset.i;const f=e.target.dataset.f;const v=e.target.value;
@@ -667,22 +732,26 @@ function dz_tasarimGuncelle(e){
   galeriListesi();if(mod==='eser'&&aktifEser===i)doldurDetay(i);seoIcerikDoldur();
 }
 async function dz_fotoYukle(e){
-  const i=+e.target.dataset.foto;const file=e.target.files[0];if(!file)return;
-  try{
-    const dataURL=await resimSikistir(file,1600,.88);
-    TASARIMLAR[i].gorseller=[dataURL];
-    document.getElementById('dz-thumb-'+i).src=dataURL;
-    if(eserMeshler[i]){new THREE.TextureLoader().load(dataURL,t=>{t.anisotropy=maxAniso;eserMeshler[i].material.map=t;eserMeshler[i].material.needsUpdate=true;});}
-    galeriListesi();if(mod==='eser'&&aktifEser===i)galeriGuncelle(i);
-    otomatikKaydet();
-  }catch(err){alert('Fotoğraf yüklenemedi: '+err.message);}
+  const i=+e.target.dataset.foto;const files=Array.from(e.target.files||[]);if(!files.length)return;
+  const durum=document.getElementById('dz-foto-durum-'+i);if(durum)durum.textContent='Yükleniyor…';
+  if(!Array.isArray(TASARIMLAR[i].gorseller))TASARIMLAR[i].gorseller=[];
+  let eklenen=0;
+  for(const file of files){
+    if(!file.type.startsWith('image/'))continue;
+    try{const dataURL=await resimSikistir(file,1600,.88);TASARIMLAR[i].gorseller.push(dataURL);eklenen++;}
+    catch(err){/* tek dosya hatası diğerlerini durdurmasın */}
+  }
+  e.target.value=''; // aynı dosyayı tekrar seçebilmek için sıfırla
+  dz_galeriDoldur(i);dz_kapakGuncelle(i);
+  if(durum)durum.textContent=eklenen?(eklenen+' görsel eklendi ✓'):'Görsel eklenemedi';
+  otomatikKaydet();
 }
 function dz_deneyimDoldur(){
   document.getElementById('dz-deneyim').innerHTML=CV.deneyim.map((d,i)=>`
     <div class="dz-card" data-i="${i}"><button class="dz-mini-sil" data-sil-deneyim="${i}">×</button>
       <div class="dz-grid">
-        <input class="dz-input" data-df="yil" value="${(d.yil||'').replace(/"/g,'&quot;')}" placeholder="Yıl (örn. 2023—)">
-        <span></span>
+        <input class="dz-input" data-df="yil-tr" value="${((d.yil&&d.yil.tr)||'').replace(/"/g,'&quot;')}" placeholder="Tarih TR (örn. 28 Temmuz – 15 Ağustos 2025)">
+        <input class="dz-input" data-df="yil-en" value="${((d.yil&&d.yil.en)||'').replace(/"/g,'&quot;')}" placeholder="Tarih EN (örn. July 28 – August 15, 2025)">
         <input class="dz-input" data-df="b-tr" value="${(d.tr.b||'').replace(/"/g,'&quot;')}" placeholder="Başlık (TR)">
         <input class="dz-input" data-df="b-en" value="${(d.en.b||'').replace(/"/g,'&quot;')}" placeholder="Başlık (EN)">
         <input class="dz-input" data-df="p-tr" value="${(d.tr.p||'').replace(/"/g,'&quot;')}" placeholder="Açıklama (TR)">
@@ -690,7 +759,9 @@ function dz_deneyimDoldur(){
       </div></div>`).join('');
   document.querySelectorAll('#dz-deneyim input[data-df]').forEach(el=>el.addEventListener('input',e=>{
     const i=+e.target.closest('.dz-card').dataset.i;const f=e.target.dataset.df;const v=e.target.value;
-    if(f==='yil')CV.deneyim[i].yil=v; else if(f==='b-tr')CV.deneyim[i].tr.b=v; else if(f==='b-en')CV.deneyim[i].en.b=v;
+    if(typeof CV.deneyim[i].yil!=='object'||!CV.deneyim[i].yil)CV.deneyim[i].yil={tr:'',en:''};
+    if(f==='yil-tr')CV.deneyim[i].yil.tr=v; else if(f==='yil-en')CV.deneyim[i].yil.en=v;
+    else if(f==='b-tr')CV.deneyim[i].tr.b=v; else if(f==='b-en')CV.deneyim[i].en.b=v;
     else if(f==='p-tr')CV.deneyim[i].tr.p=v; else if(f==='p-en')CV.deneyim[i].en.p=v; cvDoldur();}));
   document.querySelectorAll('[data-sil-deneyim]').forEach(b=>b.addEventListener('click',e=>{CV.deneyim.splice(+e.target.dataset.silDeneyim,1);dz_deneyimDoldur();cvDoldur();otomatikKaydet();}));
 }
@@ -715,6 +786,8 @@ function duzenlemePaneliDoldur(){
   document.getElementById('dz-form-endpoint').value=CV.formEndpoint||'';
   document.getElementById('dz-cv-url').value=(CV.pdfLink&&!CV.pdfLink.startsWith('data:'))?CV.pdfLink:'';
   document.getElementById('dz-cv-pdf-ad').textContent=CV.pdfLink?(CV.pdfLink.startsWith('data:')?'PDF dosyası yüklü ✓':'Link kayıtlı ✓'):'';
+  document.getElementById('dz-portfolio-url').value=(CV.portfolioLink&&!CV.portfolioLink.startsWith('data:'))?CV.portfolioLink:'';
+  document.getElementById('dz-portfolio-pdf-ad').textContent=CV.portfolioLink?(CV.portfolioLink.startsWith('data:')?'PDF dosyası yüklü ✓':'Link kayıtlı ✓'):'';
   dz_tasarimlarDoldur();dz_deneyimDoldur();dz_iletisimDoldur();
 }
 ['dz-ad','dz-soyad'].forEach(id=>document.getElementById(id).addEventListener('input',e=>{KISI[id==='dz-ad'?'ad':'soyad']=e.target.value;}));
@@ -724,14 +797,19 @@ document.getElementById('dz-bio-tr').addEventListener('input',e=>{CV.bio.tr=e.ta
 document.getElementById('dz-bio-en').addEventListener('input',e=>{CV.bio.en=e.target.value;cvDoldur();});
 document.getElementById('dz-skills').addEventListener('input',e=>{CV.skills=e.target.value.split(',').map(s=>s.trim()).filter(Boolean);cvDoldur();});
 document.getElementById('dz-bildirim-email').addEventListener('input',e=>CV.bildirimEmail=e.target.value);
-document.getElementById('dz-form-endpoint').addEventListener('input',e=>CV.formEndpoint=e.target.value);
-document.getElementById('dz-deneyim-ekle').addEventListener('click',()=>{CV.deneyim.push({yil:'',tr:{b:'',p:''},en:{b:'',p:''}});dz_deneyimDoldur();cvDoldur();otomatikKaydet();});
+document.getElementById('dz-form-endpoint').addEventListener('input',e=>{CV.formEndpoint=e.target.value.trim();formNotGuncelle();});
+document.getElementById('dz-deneyim-ekle').addEventListener('click',()=>{CV.deneyim.push({yil:{tr:'',en:''},tr:{b:'',p:''},en:{b:'',p:''}});dz_deneyimDoldur();cvDoldur();otomatikKaydet();});
 document.getElementById('dz-iletisim-ekle').addEventListener('click',()=>{CV.iletisim.push({etiket:'',deger:'',link:''});dz_iletisimDoldur();cvDoldur();otomatikKaydet();});
 document.getElementById('dz-cv-url').addEventListener('input',e=>{CV.pdfLink=e.target.value.trim();document.getElementById('dz-cv-pdf-ad').textContent=CV.pdfLink?'Link kayıtlı ✓':'';cvButonGuncelle();otomatikKaydet();});
 document.getElementById('dz-cv-pdf-lbl').addEventListener('click',()=>document.getElementById('dz-cv-pdf').click());
 document.getElementById('dz-cv-pdf').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;
   const r=new FileReader();r.onload=ev=>{CV.pdfLink=ev.target.result;document.getElementById('dz-cv-url').value='';document.getElementById('dz-cv-pdf-ad').textContent='PDF dosyası yüklü ✓ ('+f.name+')';cvButonGuncelle();otomatikKaydet();};r.readAsDataURL(f);});
 document.getElementById('dz-cv-sil').addEventListener('click',()=>{CV.pdfLink='';document.getElementById('dz-cv-url').value='';document.getElementById('dz-cv-pdf').value='';document.getElementById('dz-cv-pdf-ad').textContent='';cvButonGuncelle();otomatikKaydet();});
+document.getElementById('dz-portfolio-url').addEventListener('input',e=>{CV.portfolioLink=e.target.value.trim();document.getElementById('dz-portfolio-pdf-ad').textContent=CV.portfolioLink?'Link kayıtlı ✓':'';cvButonGuncelle();otomatikKaydet();});
+document.getElementById('dz-portfolio-pdf-lbl').addEventListener('click',()=>document.getElementById('dz-portfolio-pdf').click());
+document.getElementById('dz-portfolio-pdf').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();r.onload=ev=>{CV.portfolioLink=ev.target.result;document.getElementById('dz-portfolio-url').value='';document.getElementById('dz-portfolio-pdf-ad').textContent='PDF dosyası yüklü ✓ ('+f.name+')';cvButonGuncelle();otomatikKaydet();};r.readAsDataURL(f);});
+document.getElementById('dz-portfolio-sil').addEventListener('click',()=>{CV.portfolioLink='';document.getElementById('dz-portfolio-url').value='';document.getElementById('dz-portfolio-pdf').value='';document.getElementById('dz-portfolio-pdf-ad').textContent='';cvButonGuncelle();otomatikKaydet();});
 document.getElementById('duzenle-btn').addEventListener('click',()=>{duzenlemePaneliDoldur();document.getElementById('duzenle').classList.add('acik');});
 
 /* Paneldeki HER değişiklikte otomatik kaydet (metin + dosya) */
