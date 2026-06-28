@@ -1,0 +1,14 @@
+{
+  "name": "Mert Vergili — Fashion Designer",
+  "short_name": "MERTVERGILI",
+  "description": "Sinematik 3B portfolyo müzesi — Mert Vergili, fashion designer, Istanbul.",
+  "lang": "tr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#070709",
+  "theme_color": "#070709",
+  "icons": [
+    { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

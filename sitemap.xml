@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Domain aktifleşince loc'lar https://mertvergili.com olarak doğru çalışır.
+     Tasarımlar ?design=<slug> ile aynı sayfada açıldığından ana sayfa yeterlidir. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://mertvergili.com/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
