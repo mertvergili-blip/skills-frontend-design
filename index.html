@@ -66,7 +66,7 @@
   #galeri::-webkit-scrollbar-thumb:hover,#detay::-webkit-scrollbar-thumb:hover,.sayfa::-webkit-scrollbar-thumb:hover{background:rgba(192,38,58,.55);background-clip:padding-box}
   /* Ekran okuyucu / arama motoru için görünmez ama okunabilir içerik */
   .gizli-seo{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-  #ust-bar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:18px 30px;background:linear-gradient(180deg,var(--bar),transparent);opacity:0;transition:opacity 1.2s;pointer-events:none}
+  #ust-bar{position:fixed;top:0;left:0;right:0;z-index:42;display:flex;align-items:center;justify-content:space-between;padding:calc(18px + env(safe-area-inset-top)) max(30px,env(safe-area-inset-right)) 18px max(30px,env(safe-area-inset-left));background:linear-gradient(180deg,var(--bar),transparent);opacity:0;transition:opacity 1.2s;pointer-events:none}
   #ust-bar.acik{opacity:1;pointer-events:auto}
   #logo{font-family:'Inter',sans-serif;font-weight:300;font-size:14px;letter-spacing:3px;color:var(--bone);cursor:pointer;opacity:.95;background:none;border:none;padding:0}
   #logo b{font-weight:500}
@@ -222,7 +222,7 @@
   .dz-not b{color:var(--bone)}
   .dz-alt-aksiyon{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
   @media(max-width:680px){
-    #ust-bar{flex-wrap:wrap;row-gap:12px;padding:11px 16px;background:linear-gradient(180deg,var(--bar) 70%,transparent)}
+    #ust-bar{flex-wrap:wrap;row-gap:10px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:linear-gradient(180deg,rgba(8,8,10,.94) 64%,rgba(8,8,10,.55) 86%,transparent)}
     #logo{order:1;font-size:13px;letter-spacing:2px}
     .saglik{order:2;gap:14px}
     .menu{order:3;flex-basis:100%;justify-content:center;gap:30px}
