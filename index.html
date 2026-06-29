@@ -240,6 +240,30 @@
     .d-geri{top:12px;left:12px;padding:9px 14px;font-size:10px}
     #lb-onceki{left:8px}#lb-sonraki{right:8px}#lb-onceki,#lb-sonraki{width:42px;height:42px}
   }
+  /* ===== 21st.dev uyarlamaları (görsel/UX cila) ===== */
+  /* A) Couture imleç — sadece ince-pointer (mouse) cihazlarda */
+  #imlec{position:fixed;top:0;left:0;z-index:80;pointer-events:none;width:26px;height:26px;border:1px solid var(--bone-dim);border-radius:50%;transform:translate(-50%,-50%);transition:width .25s cubic-bezier(.16,1,.3,1),height .25s cubic-bezier(.16,1,.3,1),background-color .25s,border-color .25s,opacity .3s;opacity:0;display:none}
+  #imlec.gorunur{opacity:.85}
+  #imlec.aktif{width:64px;height:64px;border-color:var(--crimson);background:rgba(192,38,58,.08)}
+  #imlec.tikla{width:20px;height:20px}
+  #imlec-etiket{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1.5px;color:var(--bone);opacity:0;transition:opacity .25s}
+  #imlec.aktif #imlec-etiket{opacity:1}
+  @media (hover:hover) and (pointer:fine){#imlec{display:block} canvas{cursor:none}}
+  @media (pointer:coarse),(hover:none){#imlec{display:none!important} canvas{cursor:auto}} /* dokunmatik: imleç kesin kapalı */
+  /* B) Editorial detay scroll-reveal */
+  .d-reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .8s cubic-bezier(.16,1,.3,1)}
+  .d-reveal.gor{opacity:1;transform:none}
+  /* C) Film grain + vignette — 3B üstünde, overlay'lerin altında */
+  #atmosfer{position:fixed;inset:0;z-index:5;pointer-events:none;background:radial-gradient(125% 125% at 50% 42%,transparent 56%,rgba(0,0,0,.5) 100%)}
+  #atmosfer::before{content:"";position:absolute;inset:0;opacity:.045;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:160px 160px}
+  @media(max-width:680px){#atmosfer::before{display:none}} /* mobilde grain kapalı (vignette kalır) — perf */
+  /* D) Premium toast */
+  #toast-katman{position:fixed;left:50%;bottom:calc(30px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:90;display:flex;flex-direction:column;gap:10px;align-items:center;pointer-events:none;width:max-content;max-width:92vw}
+  .toast{display:flex;align-items:center;gap:9px;background:var(--panel);border:1px solid var(--line);color:var(--bone);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.5px;padding:12px 20px;border-radius:30px;backdrop-filter:blur(14px);box-shadow:0 10px 34px rgba(0,0,0,.55);opacity:0;transform:translateY(14px);transition:opacity .35s ease,transform .35s cubic-bezier(.16,1,.3,1)}
+  .toast.gor{opacity:1;transform:none}
+  .toast::before{font-weight:700}
+  .toast.ok{border-color:rgba(47,158,95,.55)} .toast.ok::before{content:"✓";color:#2f9e5f}
+  .toast.hata{border-color:var(--crimson)} .toast.hata::before{content:"!";color:var(--crimson)}
 </style>
 </head>
 <body>
@@ -253,6 +277,11 @@
 
 <!-- Arama motoru & ekran okuyucu için metinsel portfolyo (JS ile doldurulur) -->
 <div id="seo-icerik" class="gizli-seo" aria-hidden="false"></div>
+
+<!-- 21st.dev uyarlamaları: couture imleç (A), atmosfer grain/vignette (C), toast (D) -->
+<div id="atmosfer" aria-hidden="true"></div>
+<div id="imlec" aria-hidden="true"><span id="imlec-etiket">GÖR</span></div>
+<div id="toast-katman" aria-live="polite" aria-atomic="true"></div>
 
 <div id="yukleme">YÜKLENİYOR…</div>
 <div id="intro"><h1>MERTVERGILI</h1><div class="alt">STUDIO</div></div>
@@ -305,7 +334,7 @@
   <div class="sf-wrap"><div class="sf-ad" id="il-baslik">İletişim</div><div class="sf-rol" id="il-rol"></div>
     <div class="sf-bolum"><h3 data-i18n="iletisim">İLETİŞİM</h3><div id="il-iletisim"></div></div>
     <div class="sf-bolum"><h3 data-i18n="formBaslik">MESAJ GÖNDER</h3>
-      <div id="form-alan"><textarea id="f-mesaj" name="message" data-ph="mesajPlace" placeholder="Mesajınız" aria-label="Mesajınız" autocomplete="off"></textarea><input id="f-eposta" type="email" name="email" inputmode="email" autocomplete="email" spellcheck="false" data-ph="epostaPlace" placeholder="E-posta (yanıt için)" aria-label="E-posta" /><input id="f-ad" type="text" name="name" autocomplete="name" data-ph="adPlace" placeholder="Adınız (opsiyonel)" aria-label="Adınız" /><button id="form-gonder">GÖNDER</button><div id="form-not"></div><div id="form-durum" role="status" aria-live="polite"></div></div>
+      <div id="form-alan"><textarea id="f-mesaj" name="message" data-ph="mesajPlace" placeholder="Mesajınız" aria-label="Mesajınız" autocomplete="off"></textarea><input id="f-eposta" type="email" name="email" inputmode="email" autocomplete="email" spellcheck="false" data-ph="epostaPlace" placeholder="E-posta (yanıt için)" aria-label="E-posta" /><input id="f-ad" type="text" name="name" autocomplete="name" data-ph="adPlace" placeholder="Adınız (opsiyonel)" aria-label="Adınız" /><button id="form-gonder">GÖNDER</button><div id="form-not"></div><div id="form-durum"></div></div>
     </div></div>
 </section>
 
@@ -439,14 +468,18 @@ function veriYukle(){
     if(Array.isArray(d.TASARIMLAR))d.TASARIMLAR.forEach((t,i)=>{if(TASARIMLAR[i])Object.assign(TASARIMLAR[i],t);else TASARIMLAR[i]=t;});
   }catch(e){}
 }
-let _kayitTimer;
+let _kayitTimer,_kayitToastSon=0;
 function otomatikKaydet(){
   clearTimeout(_kayitTimer);
   _kayitTimer=setTimeout(()=>{
-    const r=veriKaydet();const el=document.getElementById('dz-kayit-durum');if(!el)return;
-    if(r.ok){el.textContent='Otomatik kaydedildi ✓  ('+new Date().toLocaleTimeString()+')';el.style.color='#2f9e5f';}
-    else if(r.sebep==='foto'){el.textContent='Metinler kaydedildi. Fotoğraflar çok büyük — kalıcı için İNDİR kullan.';el.style.color='#c0263a';}
-    else{el.textContent='Kaydedilemedi (tarayıcı depolaması dolu) — İNDİR ile yedekle.';el.style.color='#c0263a';}
+    const r=veriKaydet();const el=document.getElementById('dz-kayit-durum');
+    if(el){if(r.ok){el.textContent='Otomatik kaydedildi ✓  ('+new Date().toLocaleTimeString()+')';el.style.color='#2f9e5f';}
+      else if(r.sebep==='foto'){el.textContent='Metinler kaydedildi. Fotoğraflar çok büyük — kalıcı için İNDİR kullan.';el.style.color='#c0263a';}
+      else{el.textContent='Kaydedilemedi (tarayıcı depolaması dolu) — İNDİR ile yedekle.';el.style.color='#c0263a';}}
+    const now=Date.now(); // toast: spam yapma, en fazla 6 sn'de bir
+    if(now-_kayitToastSon>6000){_kayitToastSon=now;
+      if(r.ok)toast(dil==='tr'?'Otomatik kaydedildi':'Saved automatically','ok');
+      else toast(dil==='tr'?'Kayıt sınırı — İNDİR ile yedekle':'Storage limit — use Download','hata');}
   },350);
 }
 function migrasyon(){ // eski kayıtları yeni modele uyarla (geriye dönük uyumluluk)
@@ -717,7 +750,7 @@ function kapatSheet(){sheetAcik=false;document.getElementById('detay').classList
   try{history.replaceState(null,'',location.origin+location.pathname);}catch(e){}
   document.title=CV.ad[dil]+' — '+KISI.rol[dil];tusGuncelle();}
 function paylasLink(){if(aktifEser<0)return;const url=tasarimUrl(aktifEser);const btn=document.querySelector('#d-paylas span');
-  const bitir=()=>{if(btn){const o=btn.textContent;btn.textContent=DIL[dil].linkKopyalandi;setTimeout(()=>btn.textContent=DIL[dil].linkKopya,1800);}};
+  const bitir=()=>{if(btn){btn.textContent=DIL[dil].linkKopyalandi;setTimeout(()=>btn.textContent=DIL[dil].linkKopya,1800);}toast(DIL[dil].linkKopyalandi,'ok');};
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(bitir).catch(bitir);}else{prompt('Link:',url);}}
 function tekerlek(e){if(introModu||document.querySelector('.sayfa.acik')||mod!=='eser')return;
   if(e.deltaY>4&&!sheetAcik)acSheet();} // editorial detay: scroll-down ile aç; kapatma geri butonuyla
@@ -735,6 +768,9 @@ function doldurDetay(i){const d=TASARIMLAR[i];
   document.getElementById('d-teknik').textContent=tk;document.getElementById('d-bolum-teknik').classList.toggle('bos',!tk.trim());
   // C/D. Görsel akış (editorial)
   akisDoldur(i);
+  // B) scroll-reveal: metin bölümleri + akış öğeleri
+  if(!azHareket){['d-bolum-hikaye','d-bolum-teknik'].forEach(id=>{const el=document.getElementById(id);if(el&&!el.classList.contains('bos')){el.classList.add('d-reveal');el.classList.remove('gor');}});}
+  revealKur();
   // paylaşılabilir URL + sosyal başlık (tarayıcı için)
   try{history.replaceState(null,'',tasarimUrl(i));}catch(e){}
   ogGuncelle(d,i);
@@ -743,12 +779,12 @@ function akisDoldur(i){const d=TASARIMLAR[i];const wrap=document.getElementById(
   const foto=akisFotolari(d);
   if(!(d.galeri&&d.galeri.length)||!foto.length&&!d.galeri.some(g=>g.tip==='baslik')){
     wrap.innerHTML=`<div class="d-akis-bos">${dil==='tr'?'Bu tasarım için görseller yakında. (Edit panelinden görsel path/URL ekleyebilirsin.)':'Images coming soon. (Add image paths/URLs from the edit panel.)'}</div>`;return;}
-  let fi=0;
-  wrap.innerHTML=`<h3 class="d-akis-baslik" style="border-top:none;padding-top:0">${DIL[dil].gorsellerBaslik}</h3>`+d.galeri.map(g=>{
-    if(g.tip==='baslik'){const m=(g.metin&&g.metin[dil])||'';return m.trim()?`<h3 class="d-akis-baslik">${esc(m)}</h3>`:'';}
+  let fi=0;const rev=azHareket?'':' d-reveal'; // scroll-reveal (reduced-motion'da kapalı)
+  wrap.innerHTML=`<h3 class="d-akis-baslik${rev}" style="border-top:none;padding-top:0">${DIL[dil].gorsellerBaslik}</h3>`+d.galeri.map(g=>{
+    if(g.tip==='baslik'){const m=(g.metin&&g.metin[dil])||'';return m.trim()?`<h3 class="d-akis-baslik${rev}">${esc(m)}</h3>`:'';}
     if(!g.src||!g.src.trim())return '';
     const idx=fi++;const cap=(g.cap&&g.cap[dil])||'';
-    return `<figure class="d-figur ${g.genis?'genis':''}"><img loading="lazy" decoding="async" src="${esc(g.src.trim())}" data-lb="${idx}" alt="${esc(cap||d.baslik[dil])}">${cap.trim()?`<figcaption>${esc(cap)}</figcaption>`:''}</figure>`;
+    return `<figure class="d-figur${rev} ${g.genis?'genis':''}"><img loading="lazy" decoding="async" src="${esc(g.src.trim())}" data-lb="${idx}" alt="${esc(cap||d.baslik[dil])}">${cap.trim()?`<figcaption>${esc(cap)}</figcaption>`:''}</figure>`;
   }).join('');
   wrap.querySelectorAll('img[data-lb]').forEach(im=>{
     const belir=()=>im.classList.add('yuklendi');                 // yumuşak fade-in (lazy yüklenince)
@@ -764,6 +800,41 @@ function ogGuncelle(d,i){const t=d.baslik[dil]+' — '+KISI.rol[dil];document.ti
   ogSet('og:description',d.konsept[dil]||'','property');ogSet('twitter:description',d.konsept[dil]||'','name');
   ogSet('og:url',tasarimUrl(i),'property');
   const k=kapakUrl(d,i);if(k&&!k.startsWith('data:')){const abs=k.startsWith('http')?k:(siteTabani()+k.replace(/^\.?\//,''));ogSet('og:image',abs,'property');ogSet('twitter:image',abs,'name');}}
+/* ===== 21st.dev uyarlamaları (cila) ===== */
+/* D) Premium toast — aria-live katmanı üzerinden duyurulur */
+function toast(msg,tip){try{const k=document.getElementById('toast-katman');if(!k)return;
+  const t=document.createElement('div');t.className='toast'+(tip?' '+tip:'');t.textContent=msg;k.appendChild(t);
+  requestAnimationFrame(()=>t.classList.add('gor'));
+  setTimeout(()=>{t.classList.remove('gor');setTimeout(()=>t.remove(),420);},tip==='hata'?4200:2800);
+}catch(e){}}
+/* B) scroll-reveal observer (detay scroll kökünde) */
+let revealGozlemci=null;
+function revealKur(){try{if(azHareket)return;const kok=document.getElementById('detay');
+  if(revealGozlemci)revealGozlemci.disconnect();
+  revealGozlemci=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('gor');revealGozlemci.unobserve(en.target);}});},{root:kok,threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('#detay .d-reveal:not(.gor)').forEach(el=>revealGozlemci.observe(el));
+}catch(e){}}
+/* A) Couture imleç — yalnız ince-pointer (mouse) cihazlarda */
+function imlecKur(){try{
+  if(isMobile||!matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+  const imlec=document.getElementById('imlec');if(!imlec)return;
+  const uiSec='#ust-bar,.sayfa,#galeri,#detay,#lightbox,#toast-katman,button,a,input,textarea,select,label,.g-row,[role="button"]';
+  addEventListener('pointermove',e=>{
+    imlec.style.transform=`translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`;
+    imlec.classList.add('gorunur');
+    if(e.target.closest(uiSec)){imlec.style.opacity='0';imlec.classList.remove('aktif');return;}
+    imlec.style.opacity='';
+    let hit=false;
+    if(!introModu&&(mod==='genel'||mod==='koltuk')&&camera&&eserMeshler.length){
+      fare.x=(e.clientX/innerWidth)*2-1;fare.y=-(e.clientY/innerHeight)*2+1;ray.setFromCamera(fare,camera);
+      hit=ray.intersectObjects(eserMeshler).length>0;
+    }
+    imlec.classList.toggle('aktif',hit);
+  },{passive:true});
+  addEventListener('pointerdown',()=>imlec.classList.add('tikla'),{passive:true});
+  addEventListener('pointerup',()=>imlec.classList.remove('tikla'),{passive:true});
+  addEventListener('mouseleave',()=>imlec.classList.remove('gorunur'));
+}catch(e){}}
 /* ===== HAFİF & GİZLİLİK DOSTU ANALYTICS (yapılandırılmazsa hiç yüklenmez = sıfır maliyet) ===== */
 let _analitikYuklendi=false;
 function analitikAktif(){const a=CV.analitik||{};return a.sistem&&(a.kod||'').trim();}
@@ -808,6 +879,7 @@ function dilUygula(){const t=DIL[dil];document.querySelectorAll('[data-i18n]').f
   document.querySelectorAll('[data-ph]').forEach(el=>{if(t[el.dataset.ph])el.placeholder=t[el.dataset.ph];});
   document.getElementById('il-baslik').textContent=t.ilBaslik;document.getElementById('il-rol').textContent=KISI.rol[dil];
   document.documentElement.lang=dil;document.title=CV.ad[dil]+' — '+KISI.rol[dil];
+  const ie=document.getElementById('imlec-etiket');if(ie)ie.textContent=dil==='tr'?'GÖR':'VIEW';
   plakalar.forEach(p=>{p.mesh.material.map=plakaDoku(p.data);p.mesh.material.needsUpdate=true;});
   if(mod==='eser')doldurDetay(aktifEser);cvDoldur();galeriListesi();seoIcerikDoldur();formNotGuncelle();}
 function cvDoldur(){document.getElementById('hk-ad').textContent=CV.ad[dil];document.getElementById('hk-rol').textContent=KISI.rol[dil];document.getElementById('hk-bio').textContent=CV.bio[dil];
@@ -827,25 +899,25 @@ let formGonderiliyor=false;
 async function formGonder(){if(formGonderiliyor)return;
   const ad=document.getElementById('f-ad').value.trim(),ep=document.getElementById('f-eposta').value.trim(),ms=document.getElementById('f-mesaj').value.trim();
   const durum=document.getElementById('form-durum'),btn=document.getElementById('form-gonder');durum.className='';
-  if(!ms){durum.textContent=DIL[dil].formHata;durum.classList.add('hata');document.getElementById('f-mesaj').focus();return;} // sadece mesaj zorunlu
-  if(ep&&!epostaGecerli(ep)){durum.textContent=DIL[dil].epostaGecersiz;durum.classList.add('hata');return;}                    // e-posta varsa geçerli olmalı
+  if(!ms){durum.textContent=DIL[dil].formHata;durum.classList.add('hata');toast(DIL[dil].formHata,'hata');document.getElementById('f-mesaj').focus();return;} // sadece mesaj zorunlu
+  if(ep&&!epostaGecerli(ep)){durum.textContent=DIL[dil].epostaGecersiz;durum.classList.add('hata');toast(DIL[dil].epostaGecersiz,'hata');return;}      // e-posta varsa geçerli olmalı
   if(CV.formEndpoint&&CV.formEndpoint.trim()){
     formGonderiliyor=true;btn.disabled=true;btn.dataset.eski=btn.textContent;btn.textContent=DIL[dil].gonderiliyor;durum.textContent='';
     try{
       const fd=new FormData();fd.append('message',ms);if(ad)fd.append('name',ad);if(ep){fd.append('email',ep);fd.append('_replyto',ep);}
       const r=await fetch(CV.formEndpoint.trim(),{method:'POST',headers:{'Accept':'application/json'},body:fd}); // Formspree AJAX (FormData → CORS uyumlu)
-      if(r.ok){durum.textContent=DIL[dil].formOk;durum.classList.add('ok');izle('İletişim formu','/event/iletisim');
+      if(r.ok){durum.textContent=DIL[dil].formOk;durum.classList.add('ok');toast(DIL[dil].formOk,'ok');izle('İletişim formu','/event/iletisim');
         document.getElementById('f-ad').value='';document.getElementById('f-eposta').value='';document.getElementById('f-mesaj').value='';}
       else{let msg=DIL[dil].formHataNet;try{const j=await r.json();if(j&&j.errors&&j.errors.length)msg=j.errors.map(x=>x.message).join(' ');}catch(e){}
-        durum.textContent=msg;durum.classList.add('hata');}
-    }catch(e){durum.textContent=DIL[dil].formHataNet;durum.classList.add('hata');}
+        durum.textContent=msg;durum.classList.add('hata');toast(msg,'hata');}
+    }catch(e){durum.textContent=DIL[dil].formHataNet;durum.classList.add('hata');toast(DIL[dil].formHataNet,'hata');}
     finally{formGonderiliyor=false;btn.disabled=false;btn.textContent=btn.dataset.eski||DIL[dil].gonder;}
     return;
   }
   // endpoint yoksa GERÇEK aksiyon: e-posta uygulamasını aç — sahte "gönderildi" demez
   const govde=(ad?ad+' ':'')+(ep?'('+ep+')':'')+'\n\n'+ms;
   window.open(`mailto:${CV.bildirimEmail}?subject=${encodeURIComponent('Portfolyo mesajı'+(ad?' — '+ad:''))}&body=${encodeURIComponent(govde)}`,'_blank');
-  durum.textContent=DIL[dil].formMail;durum.classList.add('ok');}
+  durum.textContent=DIL[dil].formMail;durum.classList.add('ok');toast(DIL[dil].formMail,'ok');}
 
 /* intro — otomatik geçiş (logo ~3 sn) */
 let girisYapildi=false;
@@ -1120,6 +1192,7 @@ document.getElementById('dz-indir').addEventListener('click',dz_indir);
 dilUygula();
 kanonikKur();      // canonical + og:url'i site köküne sabitle (domain varsa domaine)
 analitikYukle();   // analytics yapılandırıldıysa yükle (boşsa hiçbir şey yüklenmez)
+imlecKur();        // couture imleç (sadece masaüstü ince-pointer)
 /* Düzenleme erişimi: anahtarla bir kez aç → o cihazda kalıcı kalır (sadece sen) */
 (function(){try{
   const p=new URLSearchParams(location.search);
