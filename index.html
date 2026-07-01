@@ -211,6 +211,13 @@
   .dz-gitem .dz-gmov{position:absolute;bottom:3px;background:rgba(8,8,10,.8);color:var(--bone);border:none;cursor:pointer;width:20px;height:20px;font-size:12px;line-height:1;display:flex;align-items:center;justify-content:center;border-radius:3px}
   .dz-gitem .dz-gmov.sol{left:3px}.dz-gitem .dz-gmov.sag{right:3px}
   .dz-gitem .dz-gmov:hover{background:var(--crimson);color:#fff}
+  /* Görsel yükleme (sürükle-bırak) */
+  .dz-drop{margin-top:10px;padding:14px;border:1.5px dashed var(--line);border-radius:10px;background:rgba(192,38,58,.04);text-align:center;transition:border-color .25s,background-color .25s}
+  .dz-drop.uzerinde{border-color:var(--crimson);background:rgba(192,38,58,.13)}
+  .dz-drop p{margin:0 0 8px;font-family:'Space Mono',monospace;font-size:11px;color:var(--bone-dim);line-height:1.55}
+  .dz-yukle-durum{font-family:'Space Mono',monospace;font-size:11px;color:var(--bone-dim);margin-top:8px;min-height:1em}
+  .dz-not.ok,.dz-yukle-durum.ok{color:#3fb950}
+  .dz-not.err,.dz-yukle-durum.err{color:var(--crimson)}
   .dz-gitem .dz-kapak{position:absolute;top:3px;left:3px;background:var(--crimson);color:#fff;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:1px;padding:2px 5px;border-radius:3px}
   .dz-mini-sil{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--bone-dim);cursor:pointer;font-size:18px}
   .dz-mini-sil:hover{color:var(--crimson)}
@@ -408,6 +415,17 @@
         <input class="dz-input" id="dz-bildirim-email" placeholder="Mesaj formunun gideceği e-posta">
         <input class="dz-input" id="dz-form-endpoint" placeholder="Formspree linki (opsiyonel)">
       </div>
+    </div>
+
+    <div class="sf-bolum"><h3>GÖRSEL YÜKLEME (OTOMATİK)</h3>
+      <p class="dz-not" style="margin-top:0">Bir kez GitHub erişim anahtarı gir → sonra tasarımlara <b>görsel sürükle-bırak</b> yeterli; görsel otomatik depoya yüklenir ve ~1 dakikada sitede görünür. Anahtar yalnızca bu tarayıcıda saklanır, indirilen dosyaya <b>yazılmaz</b>.</p>
+      <input class="dz-input" id="dz-gh-token" type="password" autocomplete="off" spellcheck="false" style="margin-top:10px" placeholder="GitHub erişim anahtarı (github_pat_... veya ghp_...)">
+      <div class="dz-alt-aksiyon">
+        <button class="dz-ekle" type="button" id="dz-gh-test">Bağlan / Test et</button>
+        <button class="dz-ekle" type="button" id="dz-gh-sil">Anahtarı kaldır</button>
+      </div>
+      <div class="dz-not" id="dz-gh-durum" role="status" aria-live="polite" style="margin-top:6px">Anahtar girilmedi.</div>
+      <p class="dz-not" style="margin-top:12px">Anahtar nasıl alınır: GitHub → sağ üst profil → <b>Settings</b> → en altta <b>Developer settings</b> → <b>Personal access tokens → Fine-grained tokens</b> → <b>Generate new token</b>. Repository access'te <b>Only select repositories → skills-frontend-design</b>, Permissions'ta <b>Contents: Read and write</b> seç. Oluşan anahtarı (bir kez görünür) buraya yapıştır.</p>
     </div>
 
     <div class="sf-bolum"><h3>SİTE & ANALYTICS</h3>
@@ -1004,6 +1022,71 @@ function resimSikistir(file,maxW,kalite){
     reader.onerror=rej;reader.readAsDataURL(file);
   });
 }
+
+/* ---- GitHub'a otomatik görsel yükleme ---- */
+const GH_OWNER="mertvergili-blip",GH_REPO="skills-frontend-design",GH_BRANCH="main",GH_TOKEN_KEY="mv_gh_token";
+function ghToken(){try{return localStorage.getItem(GH_TOKEN_KEY)||"";}catch(e){return"";}}
+function ghTokenKaydet(t){try{t?localStorage.setItem(GH_TOKEN_KEY,t):localStorage.removeItem(GH_TOKEN_KEY);}catch(e){}}
+function ghVar(){return !!ghToken();}
+async function ghApi(path,opt){
+  opt=opt||{};opt.headers=Object.assign({"Accept":"application/vnd.github+json","Authorization":"Bearer "+ghToken()},opt.headers||{});
+  const r=await fetch("https://api.github.com"+path,opt);
+  if(!r.ok){let m="";try{m=(await r.json()).message||"";}catch(e){}throw new Error(r.status+(m?" — "+m:""));}
+  return r.json();
+}
+function ghTest(){return ghApi("/repos/"+GH_OWNER+"/"+GH_REPO);}
+// dataURL(image/jpeg;base64,...) → repoya yükle, committed path döner
+async function ghYukle(dataUrl,klasor,adKok){
+  const b64=dataUrl.split(",")[1];
+  const ad=(adKok||"img")+"-"+Date.now()+"-"+Math.floor(Math.random()*1e4)+".jpg";
+  const path=klasor.replace(/\/$/,"")+"/"+ad;
+  await ghApi("/repos/"+GH_OWNER+"/"+GH_REPO+"/contents/"+encodeURI(path),{
+    method:"PUT",body:JSON.stringify({message:"Görsel yükle: "+path,content:b64,branch:GH_BRANCH})
+  });
+  return path;
+}
+function yukleDurum(el,msg,tip){if(!el)return;el.textContent=msg||"";el.className="dz-yukle-durum"+(tip?" "+tip:"");}
+function tasarimSlug(i){const s=TASARIMLAR[i].slug||slugYap(TASARIMLAR[i].baslik.en||TASARIMLAR[i].baslik.tr||("design-"+(i+1)));TASARIMLAR[i].slug=s;return s;}
+async function kapakYukle(i,file){
+  if(!ghVar()){alert('Önce panelin "GÖRSEL YÜKLEME (OTOMATİK)" bölümünden GitHub anahtarını girip "Bağlan"a bas.');return;}
+  const card=document.querySelector('.dz-card[data-i="'+i+'"]');
+  const durum=card&&card.querySelector('[data-kapak-durum="'+i+'"]');
+  const slug=tasarimSlug(i);
+  try{
+    yukleDurum(durum,"Görsel küçültülüyor…");
+    const dataUrl=await resimSikistir(file,2000,.85);
+    yukleDurum(durum,"Yükleniyor…");
+    const path=await ghYukle(dataUrl,"assets/projects/"+slug,"cover");
+    TASARIMLAR[i].kapak=path;
+    const ki=card&&card.querySelector('input[data-f="kapak"]');if(ki)ki.value=path;
+    dz_kapakGuncelle(i);if(mod==="eser"&&aktifEser===i)doldurDetay(i);otomatikKaydet();
+    yukleDurum(durum,"✓ Yüklendi — sitede ~1 dk içinde görünür","ok");
+  }catch(err){yukleDurum(durum,"Hata: "+err.message,"err");}
+}
+async function galeriYukle(i,files){
+  if(!ghVar()){alert('Önce panelin "GÖRSEL YÜKLEME (OTOMATİK)" bölümünden GitHub anahtarını girip "Bağlan"a bas.');return;}
+  const card=document.querySelector('.dz-card[data-i="'+i+'"]');
+  const durum=card&&card.querySelector('[data-galeri-durum="'+i+'"]');
+  const slug=tasarimSlug(i);const list=Array.from(files);let ok=0;
+  for(let n=0;n<list.length;n++){
+    try{
+      yukleDurum(durum,"("+(n+1)+"/"+list.length+") küçültülüyor…");
+      const dataUrl=await resimSikistir(list[n],1800,.85);
+      yukleDurum(durum,"("+(n+1)+"/"+list.length+") yükleniyor…");
+      const path=await ghYukle(dataUrl,"assets/projects/"+slug,"img");
+      TASARIMLAR[i].galeri=TASARIMLAR[i].galeri||[];
+      TASARIMLAR[i].galeri.push({tip:"foto",src:path,cap:{tr:"",en:""},genis:false});ok++;
+    }catch(err){yukleDurum(durum,"("+(n+1)+") hata: "+err.message,"err");}
+  }
+  dz_galeriDoldur(i);if(mod==="eser"&&aktifEser===i)doldurDetay(i);otomatikKaydet();
+  if(ok)yukleDurum(durum,"✓ "+ok+" görsel yüklendi — sitede ~1 dk içinde görünür","ok");
+}
+function dosyaSec(coklu,cb){const inp=document.createElement("input");inp.type="file";inp.accept="image/*";if(coklu)inp.multiple=true;inp.style.display="none";document.body.appendChild(inp);inp.addEventListener("change",()=>{if(inp.files&&inp.files.length)cb(inp.files);inp.remove();});inp.click();}
+function dropKur(zone,coklu,cb){
+  ["dragenter","dragover"].forEach(ev=>zone.addEventListener(ev,e=>{e.preventDefault();e.stopPropagation();zone.classList.add("uzerinde");}));
+  zone.addEventListener("dragleave",e=>{e.preventDefault();e.stopPropagation();if(!zone.contains(e.relatedTarget))zone.classList.remove("uzerinde");});
+  zone.addEventListener("drop",e=>{e.preventDefault();e.stopPropagation();zone.classList.remove("uzerinde");const f=Array.from((e.dataTransfer&&e.dataTransfer.files)||[]).filter(x=>x.type.startsWith("image/"));if(f.length)cb(coklu?f:[f[0]]);});
+}
 function dz_tasarimSatirHTML(d,i){
   return `<div class="dz-card" data-i="${i}">
     <h4>TASARIM ${i+1}</h4>
@@ -1030,11 +1113,21 @@ function dz_tasarimSatirHTML(d,i){
     </div>
     <div class="dz-altbaslik">KAPAK GÖRSELİ (3B duvarda + hero'da görünen)</div>
     <input class="dz-input" data-f="kapak" value="${esc(d.kapak)}" placeholder="assets/projects/${esc(d.slug)}/cover.webp veya https://...">
+    <div class="dz-drop" data-kdrop="${i}">
+      <p>Kapak görselini buraya <b>sürükle-bırak</b> ya da seç — otomatik yüklenir</p>
+      <button class="dz-ekle" type="button" data-kapak-yukle="${i}">⬆ Kapak yükle</button>
+      <div class="dz-yukle-durum" data-kapak-durum="${i}"></div>
+    </div>
     <div class="dz-altbaslik">GALERİ — DETAY SAYFASI GÖRSEL AKIŞI</div>
     <div id="dz-galeri-${i}"></div>
     <div class="dz-alt-aksiyon">
       <button class="dz-ekle" data-foto-ekle="${i}">+ Görsel (path/URL)</button>
       <button class="dz-ekle" data-baslik-ekle="${i}">+ Bölüm Başlığı</button>
+    </div>
+    <div class="dz-drop" data-gdrop="${i}">
+      <p>Galeriye eklemek için buraya <b>bir veya birden fazla</b> görsel sürükle — hepsi otomatik yüklenip galeriye eklenir</p>
+      <button class="dz-ekle" type="button" data-galeri-yukle="${i}">⬆ Görsel yükle (çoklu)</button>
+      <div class="dz-yukle-durum" data-galeri-durum="${i}"></div>
     </div>
   </div>`;
 }
@@ -1100,6 +1193,11 @@ function dz_tasarimlarDoldur(){
   document.querySelectorAll('#dz-tasarimlar [data-foto-ekle]').forEach(b=>b.addEventListener('click',()=>dz_galeriEkleFoto(+b.dataset.fotoEkle)));
   document.querySelectorAll('#dz-tasarimlar [data-baslik-ekle]').forEach(b=>b.addEventListener('click',()=>dz_galeriEkleBaslik(+b.dataset.baslikEkle)));
   document.querySelectorAll('#dz-tasarimlar [data-oto]').forEach(b=>b.addEventListener('click',()=>dz_otoPath(+b.dataset.oto,b.closest('.dz-card'))));
+  // Görsel yükleme: butonlar + sürükle-bırak
+  document.querySelectorAll('#dz-tasarimlar [data-kapak-yukle]').forEach(b=>b.addEventListener('click',()=>dosyaSec(false,f=>kapakYukle(+b.dataset.kapakYukle,f[0]))));
+  document.querySelectorAll('#dz-tasarimlar [data-galeri-yukle]').forEach(b=>b.addEventListener('click',()=>dosyaSec(true,f=>galeriYukle(+b.dataset.galeriYukle,f))));
+  document.querySelectorAll('#dz-tasarimlar [data-kdrop]').forEach(z=>dropKur(z,false,f=>kapakYukle(+z.dataset.kdrop,f[0])));
+  document.querySelectorAll('#dz-tasarimlar [data-gdrop]').forEach(z=>dropKur(z,true,f=>galeriYukle(+z.dataset.gdrop,f)));
   TASARIMLAR.forEach((d,i)=>dz_galeriDoldur(i));
 }
 function dz_tasarimGuncelle(e){
@@ -1185,6 +1283,22 @@ document.getElementById('dz-portfolio-pdf-lbl').addEventListener('click',()=>doc
 document.getElementById('dz-portfolio-pdf').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;
   const r=new FileReader();r.onload=ev=>{CV.portfolioLink=ev.target.result;document.getElementById('dz-portfolio-url').value='';document.getElementById('dz-portfolio-pdf-ad').textContent='PDF dosyası yüklü ✓ ('+f.name+')';cvButonGuncelle();otomatikKaydet();};r.readAsDataURL(f);});
 document.getElementById('dz-portfolio-sil').addEventListener('click',()=>{CV.portfolioLink='';document.getElementById('dz-portfolio-url').value='';document.getElementById('dz-portfolio-pdf').value='';document.getElementById('dz-portfolio-pdf-ad').textContent='';cvButonGuncelle();otomatikKaydet();});
+/* GitHub anahtarı alanı */
+(function(){
+  const tf=document.getElementById('dz-gh-token');if(!tf)return;
+  const durum=document.getElementById('dz-gh-durum');
+  function gd(){const t=ghToken();durum.textContent=t?'Anahtar kayıtlı — "Bağlan / Test et" ile doğrula.':'Anahtar girilmedi.';durum.className='dz-not';}
+  tf.value=ghToken();gd();
+  tf.addEventListener('input',()=>{ghTokenKaydet(tf.value.trim());gd();});
+  document.getElementById('dz-gh-test').addEventListener('click',async()=>{
+    ghTokenKaydet(tf.value.trim());
+    if(!ghVar()){durum.textContent='Önce anahtarı yapıştır.';durum.className='dz-not err';return;}
+    durum.textContent='Kontrol ediliyor…';durum.className='dz-not';
+    try{const r=await ghTest();durum.textContent='✓ Bağlandı: '+r.full_name+' — artık tasarımlara görsel sürükleyebilirsin.';durum.className='dz-not ok';}
+    catch(err){durum.textContent='Bağlanamadı — '+err.message+' · (izin: Contents Read/Write · doğru repo seçili mi?)';durum.className='dz-not err';}
+  });
+  document.getElementById('dz-gh-sil').addEventListener('click',()=>{ghTokenKaydet('');tf.value='';gd();});
+})();
 document.getElementById('duzenle-btn').addEventListener('click',()=>{duzenlemePaneliDoldur();document.getElementById('duzenle').classList.add('acik');});
 
 /* Paneldeki HER değişiklikte otomatik kaydet (metin + dosya) */
